@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/presentation/screens/register/sign_up_page.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.main),
       ),
       home: SignUpPage(),
     );

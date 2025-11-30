@@ -19,6 +19,7 @@ dependencies:
   flutter_svg: ^2.2.1
   dio: ^5.9.0
   intl_phone_number_input: ^0.7.5
+  pinput: ^6.0.1
 
 dev_dependencies:
   flutter_test:

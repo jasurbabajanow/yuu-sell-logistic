@@ -3,11 +3,15 @@ import 'package:flutter_svg/svg.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';
-import 'package:yuu_sell/presentation/screens/register/components/custom_text_field.dart';
+import 'package:yuu_sell/presentation/screens/register/components/forgot_button_with_icon.dart';
+import 'package:yuu_sell/presentation/screens/register/otp_page.dart';
+import 'package:yuu_sell/presentation/widgets/custom_button.dart';
+import 'package:yuu_sell/presentation/widgets/custom_text_field.dart';
 import 'package:yuu_sell/presentation/screens/register/components/phone_number_input.dart';
 
 class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
+  final bool isSignUp;
+  const SignUpPage({super.key, this.isSignUp = false});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,7 @@ class SignUpPage extends StatelessWidget {
           ),
           child: Column(
             children: [
-              SizedBox(height: 80 * ratio),
+              SizedBox(height: isSignUp ? 80 * ratio : 150 * ratio),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -34,7 +38,7 @@ class SignUpPage extends StatelessWidget {
                   SvgPicture.asset('assets/icons/logo-text.svg'),
                 ],
               ),
-              SizedBox(height: 48 * ratio),
+              SizedBox(height: isSignUp ? 48 * ratio : 158 * ratio),
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
@@ -49,10 +53,14 @@ class SignUpPage extends StatelessWidget {
                     child: Column(
                       children: [
                         Row(),
-                        Text("Sign up", style: AppFontStyles.s24w600(ratio)),
-                        SizedBox(height: 30 * ratio),
-                        PhoneNumberInput(),
                         SizedBox(height: 18 * ratio),
+                        Text(
+                          isSignUp ? "Sign up" : "Log in",
+                          style: AppFontStyles.s24w600(ratio),
+                        ),
+                        SizedBox(height: 30 * ratio),
+                        isSignUp ? PhoneNumberInput() : SizedBox(),
+                        SizedBox(height: isSignUp ? 18 * ratio : 0),
                         CustomTextField(
                           title: 'Email Address',
                           hintText: 'example@gmail.com',
@@ -64,11 +72,27 @@ class SignUpPage extends StatelessWidget {
                           hintText: '********',
                         ),
                         SizedBox(height: 18 * ratio),
-                        CustomTextField(
-                          title: 'Password',
-                          obscure: true,
-                          hintText: '********',
+                        isSignUp
+                            ? CustomTextField(
+                                title: 'Password',
+                                obscure: true,
+                                hintText: '********',
+                              )
+                            : SizedBox(),
+                        ForgotButtonWithIcon(),
+                        SizedBox(height: 22 * ratio),
+                        CustomButton(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OtpPage(),
+                              ),
+                            );
+                          },
                         ),
+                        SizedBox(height: 12 * ratio),
+                        CustomButton(isFilled: false, onTap: () {}),
                       ],
                     ),
                   ),
