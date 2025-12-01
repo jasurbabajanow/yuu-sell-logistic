@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
+import 'package:yuu_sell/core/theme/app_colors.dart';
+import 'package:yuu_sell/core/theme/app_font_styles.dart';
 import 'package:yuu_sell/presentation/screens/profile/about_us_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/general_settings_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/history_page.dart';
@@ -20,6 +22,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  static const Color _primaryBlue = Color(0xff355DEE);
+  static const Color _backgroundColor = Color(0xffE4E4E4);
+
   String selectedLanguage = 'English';
 
   void _showLanguageBottomSheet() {
@@ -51,17 +56,11 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: EdgeInsets.only(bottom: 20 * ratio),
         child: Row(
           children: [
-            SvgPicture.asset(
-              iconPath,
-              width: 24 * ratio,
-            ),
+            SvgPicture.asset(iconPath, width: 24 * ratio),
             SizedBox(width: 17 * ratio),
             Text(
               title,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -73,18 +72,14 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     final ratio = AppSizes.ratio(context);
     return Scaffold(
-      backgroundColor: Color(0xff355DEE),
+      backgroundColor: _primaryBlue,
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_ios, color: Colors.white),
+        // leading: Icon(Icons.arrow_back_ios, color: Colors.white),
         centerTitle: true,
-        backgroundColor: Color(0xff355DEE),
+        backgroundColor: _primaryBlue,
         title: Text(
           'Profile Page',
-          style: TextStyle(
-            fontSize: 26,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: AppFontStyles.s26w600(ratio).copyWith(color: AppColors.white),
         ),
         elevation: 0,
       ),
@@ -97,10 +92,10 @@ class _ProfilePageState extends State<ProfilePage> {
             right: 0,
             child: Container(
               decoration: BoxDecoration(
-                color: Color(0xffE4E4E4),
+                color: _backgroundColor,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
+                  topLeft: Radius.circular(30 * ratio),
+                  topRight: Radius.circular(30 * ratio),
                 ),
               ),
               child: Column(
@@ -112,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     height: 76 * ratio,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.white,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30 * ratio),
                         topRight: Radius.circular(30 * ratio),
@@ -127,7 +122,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                         SizedBox(width: 20 * ratio),
-                        Column(
+                        const Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -157,13 +152,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 1),
+                  SizedBox(height: 1 * ratio),
                   Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 20 * ratio,
                       vertical: 16 * ratio,
                     ),
-                    color: Colors.white,
+                    color: AppColors.white,
                     child: Column(
                       children: [
                         _buildMenuItem(
@@ -233,7 +228,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         _buildMenuItem(
                           iconPath: 'assets/icons/about.svg',
-                          title: 'About',
+                          title: 'About us',
                           ratio: ratio,
                           onTap: () {
                             Navigator.push(
@@ -253,7 +248,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       horizontal: 20 * ratio,
                       vertical: 16 * ratio,
                     ),
-                    color: Colors.white,
+                    color: AppColors.white,
                     child: Column(
                       children: [
                         _buildMenuItem(
@@ -267,7 +262,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           title: 'Notifications',
                           ratio: ratio,
                           onTap: () {
-                            
                             Navigator.push(
                               context,
                               MaterialPageRoute(

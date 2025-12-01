@@ -1,10 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:timelines_plus/timelines_plus.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
+import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
+
+  static const List<String> _statuses = [
+    'DXB',
+    'J-Ali',
+    'BND',
+    'ASB',
+    'Получено',
+  ];
+
+  static const BoxDecoration _cardDecoration = BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.all(Radius.circular(10)),
+    boxShadow: [
+      BoxShadow(
+        color: Color(0x0A000000),
+        spreadRadius: 0,
+        blurRadius: 24,
+        offset: Offset(0, 4),
+      ),
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -12,46 +34,34 @@ class HistoryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios),
           color: Colors.black,
           onPressed: () {
             Navigator.pop(context);
           },
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'History',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         elevation: 0,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         child: ListView.builder(
           itemCount: 10,
+          cacheExtent: 500,
           itemBuilder: (context, index) {
             return Padding(
-              padding: EdgeInsets.only(bottom: 20),
-
+              padding: const EdgeInsets.only(bottom: 20),
               child: Container(
                 height: 130,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      // ignore: deprecated_member_use
-                      color: Color(0xff000000).withOpacity(0.04),
-                      spreadRadius: 0,
-                      blurRadius: 24,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
-                ),
+                decoration: _cardDecoration,
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(22, 12, 22, 0),
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(22, 12, 22, 0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -90,26 +100,21 @@ class HistoryPage extends StatelessWidget {
                       height: 60,
                       child: Center(
                         child: FixedTimeline.tileBuilder(
-                          direction: Axis.horizontal,
+                          theme: TimelineThemeData(
+                            color: AppColors.textButton,
+                            direction: Axis.horizontal,
+                          ),
                           builder: TimelineTileBuilder.connectedFromStyle(
                             firstConnectorStyle: ConnectorStyle.transparent,
                             lastConnectorStyle: ConnectorStyle.transparent,
-                            
                             contentsBuilder: (_, index) {
-                              final statuses = [
-                                'DXB',
-                                'J-Ali',
-                                'BND',
-                                'ASB',
-                                'Получено',
-                              ];
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 8.0),
                                 child: Text(
-                                  statuses[index],
+                                  _statuses[index],
                                   style: AppFontStyles.s12w400(
                                     ratio,
-                                  ).copyWith(color: Colors.blue),
+                                  ).copyWith(color: AppColors.textButton),
                                 ),
                               );
                             },

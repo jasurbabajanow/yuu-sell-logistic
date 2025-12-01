@@ -41,6 +41,9 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.7,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +58,6 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
           const SizedBox(height: 20),
           Flexible(
             child: ListView.builder(
-              shrinkWrap: true,
               itemCount: languages.length,
               itemBuilder: (context, index) {
                 final language = languages[index];
