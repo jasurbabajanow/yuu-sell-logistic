@@ -30,67 +30,71 @@ class HistoryPage extends StatelessWidget {
         child: ListView.builder(
           itemCount: 10,
           itemBuilder: (context, index) {
-            return Container(
-              height: 130,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    // ignore: deprecated_member_use
-                    color: Color(0xff000000).withOpacity(0.04),
-                    spreadRadius: 0,
-                    blurRadius: 24,
-                    offset: Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(22, 12, 22, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Air-2025-00124",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+            return Padding(
+              padding: EdgeInsets.only(bottom: 20),
+
+              child: Container(
+                height: 130,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      // ignore: deprecated_member_use
+                      color: Color(0xff000000).withOpacity(0.04),
+                      spreadRadius: 0,
+                      blurRadius: 24,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(22, 12, 22, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Air-2025-00124",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                        ),
-                        Text('23.12.2024'),
-                      ],
+                          Text('23.12.2024'),
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(22, 12, 22, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Ali express",
-                          style: AppFontStyles.s12w400(ratio),
-                        ),
-                        Text(
-                          'Bankok to Dubai',
-                          style: AppFontStyles.s12w400(ratio),
-                        ),
-                        Text(
-                          "Door-to-door",
-                          style: AppFontStyles.s12w400(ratio),
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(22, 12, 22, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Ali express",
+                            style: AppFontStyles.s12w400(ratio),
+                          ),
+                          Text(
+                            'Bankok to Dubai',
+                            style: AppFontStyles.s12w400(ratio),
+                          ),
+                          Text(
+                            "Door-to-door",
+                            style: AppFontStyles.s12w400(ratio),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 22.0, right: 22),
-                    child: SizedBox(
+                    SizedBox(
                       height: 60,
                       child: Center(
                         child: FixedTimeline.tileBuilder(
                           direction: Axis.horizontal,
                           builder: TimelineTileBuilder.connectedFromStyle(
+                            firstConnectorStyle: ConnectorStyle.transparent,
+                            lastConnectorStyle: ConnectorStyle.transparent,
+                            
                             contentsBuilder: (_, index) {
                               final statuses = [
                                 'DXB',
@@ -105,17 +109,20 @@ class HistoryPage extends StatelessWidget {
                                   statuses[index],
                                   style: AppFontStyles.s12w400(
                                     ratio,
-                                  ).copyWith(color: Colors.grey),
+                                  ).copyWith(color: Colors.blue),
                                 ),
                               );
                             },
                             itemCount: 5,
                             connectionDirection: ConnectionDirection.after,
-                            itemExtent: 64,
-                            indicatorStyleBuilder: (_, index) =>
-                                IndicatorStyle.dot,
+                            itemExtent: 74,
+                            indicatorStyleBuilder: (_, index) {
+                              return (index == 4)
+                                  ? IndicatorStyle.outlined
+                                  : IndicatorStyle.dot;
+                            },
                             connectorStyleBuilder: (_, index) {
-                              return (index == 3)
+                              return (index == 4)
                                   ? ConnectorStyle.dashedLine
                                   : ConnectorStyle.solidLine;
                             },
@@ -123,8 +130,8 @@ class HistoryPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },
