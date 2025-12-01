@@ -5,9 +5,11 @@ import 'package:yuu_sell/presentation/screens/profile/about_us_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/general_settings_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/history_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/notifications_page.dart';
+import 'package:yuu_sell/presentation/screens/profile/partnership_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/payment_method_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/privacy_policy_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/security_page.dart';
+import 'package:yuu_sell/presentation/screens/profile/support_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/witgets/language_bottom_sheet.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -278,11 +280,25 @@ class _ProfilePageState extends State<ProfilePage> {
                           iconPath: 'assets/icons/partnership.svg',
                           title: 'Partnership',
                           ratio: ratio,
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PartnershipPage(),
+                            ),
+                          ),
                         ),
                         _buildMenuItem(
                           iconPath: 'assets/icons/support.svg',
                           title: 'Support',
                           ratio: ratio,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SupportPage(),
+                              ),
+                            );
+                          },
                         ),
                         _buildMenuItem(
                           iconPath: 'assets/icons/logout.svg',
