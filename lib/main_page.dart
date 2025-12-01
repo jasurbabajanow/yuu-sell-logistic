@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/presentation/screens/home/home_page.dart';
+import 'package:yuu_sell/presentation/screens/messages/messages_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/profile_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -18,7 +19,7 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       body: [
         const HomePage(),
-        const Center(child: Text('Messages Page')),
+        const MessagesPage(),
         const Center(child: Text('Track Page')),
         const ProfilePage(),
       ][selectedIndex],
