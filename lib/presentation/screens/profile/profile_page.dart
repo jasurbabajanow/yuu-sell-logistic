@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/presentation/screens/profile/about_us_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/general_settings_page.dart';
+import 'package:yuu_sell/presentation/screens/profile/history_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/notifications_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/payment_method_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/privacy_policy_page.dart';
@@ -219,6 +220,14 @@ class _ProfilePageState extends State<ProfilePage> {
                           iconPath: 'assets/icons/history.svg',
                           title: 'History',
                           ratio: ratio,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HistoryPage(),
+                              ),
+                            );
+                          },
                         ),
                         _buildMenuItem(
                           iconPath: 'assets/icons/about.svg',
