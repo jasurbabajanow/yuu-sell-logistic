@@ -6,7 +6,13 @@ import 'package:yuu_sell/core/theme/app_font_styles.dart';
 class CustomButton extends StatelessWidget {
   final bool isFilled;
   final Function()? onTap;
-  const CustomButton({super.key, required this.onTap, this.isFilled = true});
+  final String? text;
+  const CustomButton({
+    super.key,
+    required this.onTap,
+    this.isFilled = true,
+    this.text,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +29,7 @@ class CustomButton extends StatelessWidget {
               width: double.infinity,
               child: Center(
                 child: Text(
-                  'Sign up',
+                  text ?? (isFilled ? 'Sign up' : 'Log in'),
                   style: AppFontStyles.s16w600(
                     ratio,
                   ).copyWith(color: AppColors.white),
@@ -40,7 +46,7 @@ class CustomButton extends StatelessWidget {
               width: double.infinity,
               child: Center(
                 child: Text(
-                  'Log in',
+                  text ?? (isFilled ? 'Sign up' : 'Log in'),
                   style: AppFontStyles.s16w600(ratio).copyWith(
                     color: isFilled ? AppColors.white : AppColors.main,
                   ),
