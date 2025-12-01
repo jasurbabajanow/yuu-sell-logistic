@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/presentation/screens/calculate/components/custom_dropdown.dart';
+import 'package:yuu_sell/presentation/screens/create_parcel/create_parcel_main_page.dart';
 import 'package:yuu_sell/presentation/widgets/custom_button.dart';
 
 class DeliveryCalculatePage extends StatefulWidget {
@@ -50,21 +51,9 @@ class _DeliveryCalculatePageState extends State<DeliveryCalculatePage> {
             padding: EdgeInsets.symmetric(horizontal: 24 * ratio),
             child: Row(
               children: [
-                Expanded(
-                  child: _buildTab(
-                    'From yours country',
-                    0,
-                    ratio,
-                  ),
-                ),
+                Expanded(child: _buildTab('From yours country', 0, ratio)),
                 SizedBox(width: 20 * ratio),
-                Expanded(
-                  child: _buildTab(
-                    'In my country',
-                    1,
-                    ratio,
-                  ),
-                ),
+                Expanded(child: _buildTab('In my country', 1, ratio)),
               ],
             ),
           ),
@@ -131,7 +120,12 @@ class _DeliveryCalculatePageState extends State<DeliveryCalculatePage> {
                     text: 'CREATE PARCEL',
                     isFilled: false,
                     onTap: () {
-                      // TODO: Navigate to create parcel
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CreateParcelMainPage(),
+                        ),
+                      );
                     },
                   ),
                   SizedBox(height: 40 * ratio),

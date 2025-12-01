@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
+import 'package:yuu_sell/presentation/screens/calculate/delivery_calculate_page.dart';
 import 'package:yuu_sell/presentation/screens/home/components/discount_card.dart';
 import 'package:yuu_sell/presentation/screens/home/components/hero_banner.dart';
 import 'package:yuu_sell/presentation/screens/home/components/search_bar_widget.dart';
@@ -30,7 +31,12 @@ class _HomePageState extends State<HomePage> {
         child: FloatingActionButton(
           backgroundColor: AppColors.main,
           shape: const CircleBorder(),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DeliveryCalculatePage()),
+            );
+          },
           child: SvgPicture.asset('assets/icons/calculator.svg'),
         ),
       ),
@@ -103,10 +109,10 @@ class _HomePageState extends State<HomePage> {
                   5,
                   (index) => DiscountCard(
                     title: 'Autumn Surprise: XBOX Giveaway',
-                    description:
-                        'Winner revealed Oct 1, 2025 – follow us o...',
+                    description: 'Winner revealed Oct 1, 2025 – follow us o...',
                     date: '18.08.2025',
-                    imageUrl: 'https://picsum.photos/100/100?random=${20 + index}',
+                    imageUrl:
+                        'https://picsum.photos/100/100?random=${20 + index}',
                   ),
                 ),
                 SizedBox(height: 20 * ratio),
@@ -198,10 +204,7 @@ class _HomePageState extends State<HomePage> {
           color: isSelected ? Colors.transparent : Colors.transparent,
           border: isSelected
               ? Border(
-                  bottom: BorderSide(
-                    color: AppColors.main,
-                    width: 2 * ratio,
-                  ),
+                  bottom: BorderSide(color: AppColors.main, width: 2 * ratio),
                 )
               : null,
         ),
