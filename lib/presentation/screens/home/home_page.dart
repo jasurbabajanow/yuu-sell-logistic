@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/presentation/screens/calculate/delivery_calculate_page.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/car_cargo_page.dart';
 import 'package:yuu_sell/presentation/screens/home/components/discount_card.dart';
 import 'package:yuu_sell/presentation/screens/home/components/hero_banner.dart';
 import 'package:yuu_sell/presentation/screens/home/components/search_bar_widget.dart';
@@ -77,11 +78,21 @@ class _HomePageState extends State<HomePage> {
                             'We receive, label, pack, and ship your packets directly to FBA ware...',
                         imageUrl: 'https://picsum.photos/200/120?random=10',
                       ),
-                      ServiceCard(
-                        title: 'Truck CARGO',
-                        description:
-                            'We receive, label, pack, and ship your products to Amazon\'s FBA ware...',
-                        imageUrl: 'https://picsum.photos/200/120?random=11',
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CarCargoPage(),
+                            ),
+                          );
+                        },
+                        child: ServiceCard(
+                          title: 'Truck CARGO',
+                          description:
+                              'We receive, label, pack, and ship your products to Amazon\'s FBA ware...',
+                          imageUrl: 'https://picsum.photos/200/120?random=11',
+                        ),
                       ),
                       ServiceCard(
                         title: 'SEA CARGO',

@@ -38,13 +38,13 @@ class CustomTextField2 extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: 12 * ratio,
-              // vertical: 1 * ratio,
             ),
             child: TextField(
               decoration: InputDecoration(
                 border: InputBorder.none,
                 fillColor: AppColors.white,
                 hintText: hintText,
+                hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14 * ratio),
                 hintMaxLines: maxLines,
               ),
               obscureText: obscure,
