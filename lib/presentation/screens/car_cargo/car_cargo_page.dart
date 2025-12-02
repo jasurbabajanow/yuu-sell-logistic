@@ -45,7 +45,6 @@ class _CarCargoPageState extends State<CarCargoPage> {
             fontWeight: FontWeight.w600,
           ),
         ),
-        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(

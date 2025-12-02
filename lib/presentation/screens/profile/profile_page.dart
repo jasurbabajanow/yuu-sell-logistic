@@ -208,7 +208,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => PaymentMethodPage(),
+                                builder: (context) => PaymentHistoryPage(),
                               ),
                             );
                           },

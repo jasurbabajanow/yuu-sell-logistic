@@ -30,6 +30,7 @@ class CustomTextField2 extends StatelessWidget {
         ),
         SizedBox(height: 10 * ratio),
         Container(
+          height: 40,
           decoration: BoxDecoration(
             color: AppColors.white,
             border: Border.all(color: Color(0xff222222)),
@@ -38,13 +39,14 @@ class CustomTextField2 extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: 12 * ratio,
+              vertical: 10 * ratio,
             ),
             child: TextField(
               decoration: InputDecoration(
                 border: InputBorder.none,
                 fillColor: AppColors.white,
                 hintText: hintText,
-                hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14 * ratio),
+                hintStyle: TextStyle(color: Color(0xff787878), fontSize: 14 * ratio),
                 hintMaxLines: maxLines,
               ),
               obscureText: obscure,

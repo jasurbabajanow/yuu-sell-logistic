@@ -9,6 +9,7 @@ import 'package:yuu_sell/presentation/screens/home/components/hero_banner.dart';
 import 'package:yuu_sell/presentation/screens/home/components/search_bar_widget.dart';
 import 'package:yuu_sell/presentation/screens/home/components/service_card.dart';
 import 'package:yuu_sell/presentation/screens/home/components/tracking_card.dart';
+import 'package:yuu_sell/presentation/screens/sea_cargo/sea_cargo_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -94,11 +95,21 @@ class _HomePageState extends State<HomePage> {
                           imageUrl: 'https://picsum.photos/200/120?random=11',
                         ),
                       ),
-                      ServiceCard(
-                        title: 'SEA CARGO',
-                        description:
-                            'We receive, label, pack, and ship your products to Amazon\'s FBA ware...',
-                        imageUrl: 'https://picsum.photos/200/120?random=12',
+                      GestureDetector(
+                         onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SeaCargoPage(),
+                            ),
+                          );
+                        },
+                        child: ServiceCard(
+                          title: 'SEA CARGO',
+                          description:
+                              'We receive, label, pack, and ship your products to Amazon\'s FBA ware...',
+                          imageUrl: 'https://picsum.photos/200/120?random=12',
+                        ),
                       ),
                     ],
                   ),

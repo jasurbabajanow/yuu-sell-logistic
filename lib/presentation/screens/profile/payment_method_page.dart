@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 
-class PaymentMethodPage extends StatefulWidget {
-  const PaymentMethodPage({super.key});
+class PaymentHistoryPage extends StatefulWidget {
+  const PaymentHistoryPage({super.key});
 
   @override
-  State<PaymentMethodPage> createState() => _PaymentMethodPageState();
+  State<PaymentHistoryPage> createState() => _PaymentHistoryPageState();
 }
 
-class _PaymentMethodPageState extends State<PaymentMethodPage> {
+class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
   @override
   Widget build(BuildContext context) {
     final ratio = AppSizes.ratio(context);
@@ -24,7 +24,7 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
         ),
         centerTitle: true,
         title: Text(
-          'Payment Method',
+          'Payment History',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         elevation: 0,
