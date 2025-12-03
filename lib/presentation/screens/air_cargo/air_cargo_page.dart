@@ -9,14 +9,14 @@ import 'package:yuu_sell/presentation/screens/home/components/discount_card.dart
 import 'package:yuu_sell/presentation/screens/sea_cargo/econom_page.dart';
 import 'package:yuu_sell/presentation/screens/sea_cargo/express_page.dart';
 
-class SeaCargoPage extends StatefulWidget {
-  const SeaCargoPage({super.key});
+class AirCargoPage extends StatefulWidget {
+  const AirCargoPage({super.key});
 
   @override
-  State<SeaCargoPage> createState() => _SeaCargoPageState();
+  State<AirCargoPage> createState() => _AirCargoPageState();
 }
 
-class _SeaCargoPageState extends State<SeaCargoPage> {
+class _AirCargoPageState extends State<AirCargoPage> {
   int selectedTabIndex = 0;
   final List<String> tabs = ['News', 'Discounts', 'Shopping'];
   @override
@@ -38,7 +38,7 @@ class _SeaCargoPageState extends State<SeaCargoPage> {
           },
         ),
         title: Text(
-          'Sea cargo',
+          'Air cargo',
           style: TextStyle(
             color: Colors.black,
             fontSize: 17 * ratio,

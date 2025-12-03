@@ -9,7 +9,7 @@ import 'package:yuu_sell/presentation/screens/home/components/hero_banner.dart';
 import 'package:yuu_sell/presentation/screens/home/components/search_bar_widget.dart';
 import 'package:yuu_sell/presentation/screens/home/components/service_card.dart';
 import 'package:yuu_sell/presentation/screens/home/components/tracking_card.dart';
-import 'package:yuu_sell/presentation/screens/sea_cargo/sea_cargo_page.dart';
+import 'package:yuu_sell/presentation/screens/sea_cargo/air_cargo_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -73,11 +73,21 @@ class _HomePageState extends State<HomePage> {
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: [
-                      ServiceCard(
-                        title: 'AIR CARGO',
-                        description:
-                            'We receive, label, pack, and ship your packets directly to FBA ware...',
-                        imageUrl: 'https://picsum.photos/200/120?random=10',
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AirCargoPage(),
+                            ),
+                          );
+                        },
+                        child: ServiceCard(
+                          title: 'AIR CARGO',
+                          description:
+                              'We receive, label, pack, and ship your packets directly to FBA ware...',
+                          imageUrl: 'https://picsum.photos/200/120?random=10',
+                        ),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -96,13 +106,13 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       GestureDetector(
-                         onTap: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SeaCargoPage(),
-                            ),
-                          );
+                        onTap: () {
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => const SeaCargoPage(),
+                          //   ),
+                          // );
                         },
                         child: ServiceCard(
                           title: 'SEA CARGO',
