@@ -9,7 +9,7 @@ import 'package:yuu_sell/presentation/screens/home/components/hero_banner.dart';
 import 'package:yuu_sell/presentation/screens/home/components/search_bar_widget.dart';
 import 'package:yuu_sell/presentation/screens/home/components/service_card.dart';
 import 'package:yuu_sell/presentation/screens/home/components/tracking_card.dart';
-import 'package:yuu_sell/presentation/screens/sea_cargo/air_cargo_page.dart';
+import 'package:yuu_sell/presentation/screens/air_cargo/air_cargo_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

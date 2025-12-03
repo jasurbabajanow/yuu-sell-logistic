@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
-import 'package:yuu_sell/presentation/screens/sea_cargo/payment_method_page.dart';
+import 'package:yuu_sell/presentation/screens/air_cargo/payment_method_page.dart';
 import 'package:yuu_sell/presentation/widgets/custom_button.dart';
 import 'package:yuu_sell/presentation/widgets/custom_dropdown_jjj.dart';
 import 'package:yuu_sell/presentation/widgets/custom_text_field2.dart';

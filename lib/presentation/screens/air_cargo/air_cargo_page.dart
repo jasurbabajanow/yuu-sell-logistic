@@ -6,8 +6,8 @@ import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';
 import 'package:yuu_sell/presentation/screens/home/components/discount_card.dart';
-import 'package:yuu_sell/presentation/screens/sea_cargo/econom_page.dart';
-import 'package:yuu_sell/presentation/screens/sea_cargo/express_page.dart';
+import 'package:yuu_sell/presentation/screens/air_cargo/econom_page.dart';
+import 'package:yuu_sell/presentation/screens/air_cargo/express_page.dart';
 
 class AirCargoPage extends StatefulWidget {
   const AirCargoPage({super.key});
