@@ -10,6 +10,7 @@ import 'package:yuu_sell/presentation/screens/home/components/search_bar_widget.
 import 'package:yuu_sell/presentation/screens/home/components/service_card.dart';
 import 'package:yuu_sell/presentation/screens/home/components/tracking_card.dart';
 import 'package:yuu_sell/presentation/screens/air_cargo/air_cargo_page.dart';
+import 'package:yuu_sell/presentation/screens/sea_cargo/sea_cargo_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -107,12 +108,12 @@ class _HomePageState extends State<HomePage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const SeaCargoPage(),
-                          //   ),
-                          // );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SeaCargoPage(),
+                            ),
+                          );
                         },
                         child: ServiceCard(
                           title: 'SEA CARGO',
