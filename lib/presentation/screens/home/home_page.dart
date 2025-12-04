@@ -5,7 +5,6 @@ import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/presentation/screens/calculate/delivery_calculate_page.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/car_cargo_page.dart';
 import 'package:yuu_sell/presentation/screens/home/components/discount_card.dart';
-import 'package:yuu_sell/presentation/screens/home/components/hero_banner.dart';
 import 'package:yuu_sell/presentation/screens/home/components/search_bar_widget.dart';
 import 'package:yuu_sell/presentation/screens/home/components/service_card.dart';
 import 'package:yuu_sell/presentation/screens/home/components/tracking_card.dart';
@@ -56,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: 20 * ratio),
 
                 // Hero Banner
-                const HeroBanner(),
+                Image.asset('assets/images/banner.png'),
                 SizedBox(height: 24 * ratio),
 
                 // Our services
@@ -151,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: 20 * ratio),
 
                 // Another Banner
-                const HeroBanner(),
+                Image.asset('assets/images/banner.png'),
                 SizedBox(height: 24 * ratio),
 
                 // Tracking Card

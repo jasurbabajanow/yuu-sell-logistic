@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/main_page.dart';
+import 'package:yuu_sell/presentation/screens/register/sign_up_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.main),
       ),
-      home: MainPage(),
+      home: SignUpPage(),
     );
   }
 }
