@@ -126,26 +126,31 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SizedBox(height: 24 * ratio),
 
-                // Tabs
-                Row(
-                  children: tabs.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    final tab = entry.value;
-                    return _buildTab(tab, index, ratio);
-                  }).toList(),
-                ),
-                SizedBox(height: 16 * ratio),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          for (int i = 0; i < tabs.length; i++)
+                            _buildTab(tabs[i], i, ratio),
+                        ],
+                      ),
+                    ),
 
-                // Discount Cards List
-                ...List.generate(
-                  5,
-                  (index) => DiscountCard(
-                    title: 'Autumn Surprise: XBOX Giveaway',
-                    description: 'Winner revealed Oct 1, 2025 – follow us o...',
-                    date: '18.08.2025',
-                    imageUrl:
-                        'https://picsum.photos/100/100?random=${20 + index}',
-                  ),
+                    SizedBox(height: 16 * ratio),
+
+                    for (int i = 0; i < 5; i++)
+                      DiscountCard(
+                        title: 'Autumn Surprise: XBOX Giveaway',
+                        description:
+                            'Winner revealed Oct 1, 2025 – follow us o...',
+                        date: '18.08.2025',
+                        imageUrl:
+                            'https://picsum.photos/100/100?random=${20 + i}',
+                      ),
+                  ],
                 ),
                 SizedBox(height: 20 * ratio),
 
@@ -176,11 +181,7 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.blue.shade50,
                         borderRadius: BorderRadius.circular(8 * ratio),
                       ),
-                      child: Icon(
-                        Icons.receipt_long_outlined,
-                        color: AppColors.main,
-                        size: 28 * ratio,
-                      ),
+                      child: SvgPicture.asset('assets/icons/calc.svg'),
                     ),
                     SizedBox(width: 16 * ratio),
                     Expanded(
@@ -227,6 +228,7 @@ class _HomePageState extends State<HomePage> {
         });
       },
       child: Container(
+        width: 120 * ratio,
         padding: EdgeInsets.symmetric(
           horizontal: 16 * ratio,
           vertical: 8 * ratio,
@@ -240,12 +242,14 @@ class _HomePageState extends State<HomePage> {
                 )
               : null,
         ),
-        child: Text(
-          title,
-          style: TextStyle(
-            fontSize: 14 * ratio,
-            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-            color: isSelected ? AppColors.main : Colors.grey.shade600,
+        child: Center(
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 14 * ratio,
+              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+              color: isSelected ? AppColors.main : Colors.grey.shade600,
+            ),
           ),
         ),
       ),
