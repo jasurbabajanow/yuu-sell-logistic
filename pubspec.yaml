@@ -22,6 +22,7 @@ dependencies:
   pinput: ^6.0.1
   timelines_plus: ^1.0.8
   country_picker: ^2.0.27
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
