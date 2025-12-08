@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yuu_sell/main_page.dart';
+import 'package:yuu_sell/presentation/screens/air_cargo/air_cargo_page.dart';
+import 'package:yuu_sell/presentation/screens/air_cargo/econom_page.dart';
+import 'package:yuu_sell/presentation/screens/air_cargo/express_page.dart';
 import 'package:yuu_sell/presentation/screens/calculate/delivery_calculate_page.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/car_cargo_page.dart';
 import 'package:yuu_sell/presentation/screens/home/home_page.dart';
 import 'package:yuu_sell/presentation/screens/messages/messages_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/profile_page.dart';
 import 'package:yuu_sell/presentation/screens/register/otp_page.dart';
 import 'package:yuu_sell/presentation/screens/register/sign_up_page.dart';
 import 'package:yuu_sell/presentation/screens/register/splash_screen.dart';
+import 'package:yuu_sell/presentation/screens/sea_cargo/sea_cargo_page.dart';
 
 /// Route paths
 class AppRoutes {
@@ -26,11 +31,18 @@ class AppRoutes {
 
   // Nested routes (keep bottom nav visible)
   static const String deliveryCalculate = 'delivery-calculate';
+  static const String airCargo = 'air-cargo';
+  static const String carCargo = 'car-cargo';
+  static const String seaCargo = 'sea-cargo';
+
+  // Air cargo sub-routes
+  static const String econom = 'econom';
+  static const String express = 'express';
 }
 
 /// GoRouter configuration
 final GoRouter appRouter = GoRouter(
-  initialLocation: AppRoutes.splash,
+  initialLocation: AppRoutes.home,
   debugLogDiagnostics: true,
   routes: [
     // Splash screen (3 sec timer → Register)
@@ -75,6 +87,34 @@ final GoRouter appRouter = GoRouter(
                   path: AppRoutes.deliveryCalculate,
                   name: 'deliveryCalculate',
                   builder: (context, state) => const DeliveryCalculatePage(),
+                ),
+                GoRoute(
+                  path: AppRoutes.airCargo,
+                  name: 'airCargo',
+                  builder: (context, state) => const AirCargoPage(),
+                  routes: [
+                    GoRoute(
+                      path: AppRoutes.econom,
+                      name: 'econom',
+                      builder: (context, state) => const EconomPage(),
+                    ),
+                    GoRoute(
+                      path: AppRoutes.express,
+                      name: 'express',
+                      builder: (context, state) => const ExpressPage(),
+                    ),
+                  ],
+                ),
+
+                GoRoute(
+                  path: AppRoutes.carCargo,
+                  name: 'carCargo',
+                  builder: (context, state) => const CarCargoPage(),
+                ),
+                GoRoute(
+                  path: AppRoutes.seaCargo,
+                  name: 'seaCargo',
+                  builder: (context, state) => const SeaCargoPage(),
                 ),
               ],
             ),

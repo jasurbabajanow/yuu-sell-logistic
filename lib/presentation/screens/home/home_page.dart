@@ -3,13 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
-import 'package:yuu_sell/presentation/screens/car_cargo/car_cargo_page.dart';
 import 'package:yuu_sell/presentation/screens/home/components/discount_card.dart';
 import 'package:yuu_sell/presentation/screens/home/components/search_bar_widget.dart';
 import 'package:yuu_sell/presentation/screens/home/components/service_card.dart';
 import 'package:yuu_sell/presentation/screens/home/components/tracking_card.dart';
-import 'package:yuu_sell/presentation/screens/air_cargo/air_cargo_page.dart';
-import 'package:yuu_sell/presentation/screens/sea_cargo/sea_cargo_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,6 +18,29 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int selectedTabIndex = 0;
   final List<String> tabs = ['Discounts', 'Locations', 'Shopping'];
+  final List<Map<String, String>> services = [
+    {
+      'title': 'AIR CARGO',
+      'description':
+          'We receive, label, pack, and ship your products directly to Amazon FBA warehouses. 100% compliant with Amazon’s requirements — no delays or returns.',
+      'imagePath': 'assets/images/air_cargo_card.svg',
+      'pageRoute': 'airCargo',
+    },
+    {
+      'title': 'TRUCK CARGO',
+      'description':
+          'We receive, label, pack, and ship your products directly to Amazon FBA warehouses. 100% compliant with Amazon’s requirements — no delays or returns.',
+      'imagePath': 'assets/images/air_cargo_card.svg',
+      'pageRoute': 'carCargo',
+    },
+    {
+      'title': 'SEA CARGO',
+      'description':
+          'We receive, label, pack, and ship your products directly to Amazon FBA warehouses. 100% compliant with Amazon’s requirements — no delays or returns.',
+      'imagePath': 'assets/images/air_cargo_card.svg',
+      'pageRoute': 'seaCargo',
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -66,57 +86,33 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SizedBox(height: 16 * ratio),
                 SizedBox(
-                  height: 200 * ratio,
+                  height: 206 * ratio,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: [
-                      GestureDetector(
+                      ServiceCard(
+                        title: services[0]['title'] ?? '',
+                        description: services[0]['description'] ?? '',
+                        imagePath: services[0]['imagePath'] ?? '',
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const AirCargoPage(),
-                            ),
-                          );
+                          context.goNamed(services[0]['pageRoute'] ?? 'push');
                         },
-                        child: ServiceCard(
-                          title: 'AIR CARGO',
-                          description:
-                              'We receive, label, pack, and ship your packets directly to FBA ware...',
-                          imageUrl: 'https://picsum.photos/200/120?random=10',
-                        ),
                       ),
-                      GestureDetector(
+                      ServiceCard(
+                        title: services[1]['title'] ?? '',
+                        description: services[1]['description'] ?? '',
+                        imagePath: services[1]['imagePath'] ?? '',
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const CarCargoPage(),
-                            ),
-                          );
+                          context.goNamed(services[1]['pageRoute'] ?? 'push');
                         },
-                        child: ServiceCard(
-                          title: 'Truck CARGO',
-                          description:
-                              'We receive, label, pack, and ship your products to Amazon\'s FBA ware...',
-                          imageUrl: 'https://picsum.photos/200/120?random=11',
-                        ),
                       ),
-                      GestureDetector(
+                      ServiceCard(
+                        title: services[2]['title'] ?? '',
+                        description: services[2]['description'] ?? '',
+                        imagePath: services[2]['imagePath'] ?? '',
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SeaCargoPage(),
-                            ),
-                          );
+                          context.goNamed(services[2]['pageRoute'] ?? 'push');
                         },
-                        child: ServiceCard(
-                          title: 'SEA CARGO',
-                          description:
-                              'We receive, label, pack, and ship your products to Amazon\'s FBA ware...',
-                          imageUrl: 'https://picsum.photos/200/120?random=12',
-                        ),
                       ),
                     ],
                   ),
