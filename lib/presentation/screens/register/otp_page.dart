@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
+import 'package:yuu_sell/core/router/app_router.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';
 import 'package:yuu_sell/presentation/screens/register/components/custom_back_button.dart';
@@ -79,7 +81,13 @@ class _OtpPageState extends State<OtpPage> {
                 style: AppFontStyles.s16w500(ratio),
               ),
               SizedBox(height: 100 * ratio),
-              Pinput(length: 4),
+              Pinput(
+                length: 4,
+                onCompleted: (pin) {
+                  // Navigate to main page after OTP verification
+                  context.go(AppRoutes.home);
+                },
+              ),
               const Spacer(),
               if (_secondsRemaining > 0)
                 Text(

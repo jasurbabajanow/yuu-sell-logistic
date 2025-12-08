@@ -1,0 +1,119 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:yuu_sell/main_page.dart';
+import 'package:yuu_sell/presentation/screens/calculate/delivery_calculate_page.dart';
+import 'package:yuu_sell/presentation/screens/home/home_page.dart';
+import 'package:yuu_sell/presentation/screens/messages/messages_page.dart';
+import 'package:yuu_sell/presentation/screens/profile/profile_page.dart';
+import 'package:yuu_sell/presentation/screens/register/otp_page.dart';
+import 'package:yuu_sell/presentation/screens/register/sign_up_page.dart';
+import 'package:yuu_sell/presentation/screens/register/splash_screen.dart';
+
+/// Route paths
+class AppRoutes {
+  // Auth routes
+  static const String splash = '/splash';
+  static const String signUp = '/sign-up';
+  static const String login = '/login';
+  static const String otp = '/otp';
+
+  // Main shell routes
+  static const String main = '/';
+  static const String home = '/home';
+  static const String messages = '/messages';
+  static const String truck = '/truck';
+  static const String profile = '/profile';
+
+  // Nested routes (keep bottom nav visible)
+  static const String deliveryCalculate = 'delivery-calculate';
+}
+
+/// GoRouter configuration
+final GoRouter appRouter = GoRouter(
+  initialLocation: AppRoutes.splash,
+  debugLogDiagnostics: true,
+  routes: [
+    // Splash screen (3 sec timer → Register)
+    GoRoute(
+      path: AppRoutes.splash,
+      name: 'splash',
+      builder: (context, state) => const SplashScreen(),
+    ),
+
+    // Auth routes
+    GoRoute(
+      path: AppRoutes.signUp,
+      name: 'signUp',
+      builder: (context, state) => const SignUpPage(signUp: true),
+    ),
+    GoRoute(
+      path: AppRoutes.login,
+      name: 'login',
+      builder: (context, state) => const SignUpPage(signUp: false),
+    ),
+    GoRoute(
+      path: AppRoutes.otp,
+      name: 'otp',
+      builder: (context, state) => const OtpPage(),
+    ),
+
+    // Main shell with bottom navigation
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return MainPageShell(navigationShell: navigationShell);
+      },
+      branches: [
+        // Home tab
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.home,
+              name: 'home',
+              builder: (context, state) => const HomePage(),
+              routes: [
+                GoRoute(
+                  path: AppRoutes.deliveryCalculate,
+                  name: 'deliveryCalculate',
+                  builder: (context, state) => const DeliveryCalculatePage(),
+                ),
+              ],
+            ),
+          ],
+        ),
+        // Messages tab
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.messages,
+              name: 'messages',
+              builder: (context, state) => const MessagesPage(),
+            ),
+          ],
+        ),
+        // Truck tab
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.truck,
+              name: 'truck',
+              builder: (context, state) =>
+                  const Center(child: Text('Truck Page')),
+            ),
+          ],
+        ),
+        // Profile tab
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.profile,
+              name: 'profile',
+              builder: (context, state) => const ProfilePage(),
+            ),
+          ],
+        ),
+      ],
+    ),
+  ],
+  errorBuilder: (context, state) =>
+      Scaffold(body: Center(child: Text('Page not found: ${state.uri.path}'))),
+);

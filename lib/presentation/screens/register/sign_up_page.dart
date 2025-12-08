@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
+import 'package:yuu_sell/core/router/app_router.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';
 import 'package:yuu_sell/presentation/screens/register/components/forgot_button_with_icon.dart';
-import 'package:yuu_sell/presentation/screens/register/otp_page.dart';
 import 'package:yuu_sell/presentation/widgets/custom_button.dart';
 import 'package:yuu_sell/presentation/widgets/custom_text_field.dart';
 import 'package:yuu_sell/presentation/screens/register/components/phone_number_input.dart';
 
-class SignUpPage extends StatelessWidget {
-  final bool isSignUp;
-  const SignUpPage({super.key, this.isSignUp = false});
+class SignUpPage extends StatefulWidget {
+  final bool signUp;
+  const SignUpPage({super.key, required this.signUp});
+
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  bool isSignUp = true;
+  @override
+  void initState() {
+    isSignUp = widget.signUp;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,16 +96,18 @@ class SignUpPage extends StatelessWidget {
                         SizedBox(height: 22 * ratio),
                         CustomButton(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => OtpPage(),
-                              ),
-                            );
+                            context.push(AppRoutes.otp);
                           },
                         ),
                         SizedBox(height: 12 * ratio),
-                        CustomButton(isFilled: false, onTap: () {}),
+                        CustomButton(
+                          isFilled: false,
+                          onTap: () {
+                            setState(() {
+                              isSignUp = false;
+                            });
+                          },
+                        ),
                       ],
                     ),
                   ),

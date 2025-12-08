@@ -1,35 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
-import 'package:yuu_sell/presentation/screens/home/home_page.dart';
-import 'package:yuu_sell/presentation/screens/messages/messages_page.dart';
-import 'package:yuu_sell/presentation/screens/profile/profile_page.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+/// Shell widget for bottom navigation with go_router
+class MainPageShell extends StatelessWidget {
+  final StatefulNavigationShell navigationShell;
 
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  int selectedIndex = 0;
+  const MainPageShell({
+    super.key,
+    required this.navigationShell,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: [
-        const HomePage(),
-        const MessagesPage(),
-        const Center(child: Text('Truck Page')),
-        const ProfilePage(),
-      ][selectedIndex],
+      body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: selectedIndex,
+        currentIndex: navigationShell.currentIndex,
         onTap: (index) {
-          setState(() {
-            selectedIndex = index;
-          });
+          navigationShell.goBranch(
+            index,
+            initialLocation: index == navigationShell.currentIndex,
+          );
         },
         type: BottomNavigationBarType.fixed,
         selectedItemColor: AppColors.main,
@@ -48,7 +41,7 @@ class _MainPageState extends State<MainPage> {
             activeIcon: SvgPicture.asset('assets/icons/home_outlined.svg'),
             label: 'Home',
           ),
-           BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: SvgPicture.asset('assets/icons/message.svg'),
             activeIcon: SvgPicture.asset('assets/icons/message_outlined.svg'),
             label: 'Message',

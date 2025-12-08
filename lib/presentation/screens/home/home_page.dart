@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
-import 'package:yuu_sell/presentation/screens/calculate/delivery_calculate_page.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/car_cargo_page.dart';
 import 'package:yuu_sell/presentation/screens/home/components/discount_card.dart';
 import 'package:yuu_sell/presentation/screens/home/components/search_bar_widget.dart';
@@ -34,10 +34,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: AppColors.main,
           shape: const CircleBorder(),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => DeliveryCalculatePage()),
-            );
+            context.goNamed('deliveryCalculate');
           },
           child: SvgPicture.asset('assets/icons/calculator.svg'),
         ),
