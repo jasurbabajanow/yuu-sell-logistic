@@ -1,13 +1,20 @@
-# yuu_sell
+# Yuu Sell
 
-A Flutter authentication application featuring a modern UI with custom reusable widgets. Built with responsive design principles and a cohesive theming system.
+A Flutter-based cargo and logistics application for international shipping services. Users can calculate delivery costs, create parcels, track shipments, and choose from multiple cargo options including air, truck, and sea freight.
 
 ## Features
 
-- **Custom Widgets Library**: Includes `CustomTextField`, `CustomButton`, `CustomBackButton`, and `ForgotButtonWithIcon` for consistent UI across the app
-- **Authentication Flow**: Sign up and OTP verification screens with countdown timer
-- **Responsive Design**: Adaptive sizing system that scales UI elements across different screen sizes
-- **Theme System**: Centralized color palette and typography styles for maintainable design
+- **Multiple Cargo Services**:
+  - Air Cargo (Econom & Express options)
+  - Truck Cargo
+  - Sea Cargo (LCL & FCL shipping)
+- **Delivery Calculator**: Calculate shipping costs between countries and cities
+- **Parcel Management**: Create and track parcels with step-by-step workflow
+- **Package Tracking**: Track shipments in real-time
+- **Authentication Flow**: Sign up and OTP verification with countdown timer
+- **Messaging System**: In-app communication for shipment updates
+- **Responsive Design**: Adaptive sizing system that scales across different screen sizes
+- **Bottom Navigation**: Persistent navigation with Home, Messages, Truck, and Profile tabs
 
 ## Packages Used
 
@@ -17,6 +24,87 @@ A Flutter authentication application featuring a modern UI with custom reusable 
 - **[flutter_svg](https://pub.dev/packages/flutter_svg)** (^2.2.1) - SVG rendering support for scalable vector graphics
 - **[dio](https://pub.dev/packages/dio)** (^5.9.0) - HTTP client for API requests and network operations
 
+## Navigation (go_router)
+
+The app uses `go_router` with `StatefulShellRoute` for bottom navigation persistence.
+
+### Route Structure
+
+```
+/splash          -> SplashScreen (3 sec timer)
+/sign-up         -> SignUpPage
+/login           -> SignUpPage (login mode)
+/otp             -> OtpPage
+
+/home            -> HomePage (Tab 0)
+  /delivery-calculate  -> DeliveryCalculatePage
+  /air-cargo           -> AirCargoPage
+    /econom            -> EconomPage
+    /express           -> ExpressPage
+  /car-cargo           -> CarCargoPage
+  /sea-cargo           -> SeaCargoPage
+
+/messages        -> MessagesPage (Tab 1)
+/truck           -> TruckPage (Tab 2)
+/profile         -> ProfilePage (Tab 3)
+```
+
+### App Flow
+
+```
+Splash (3 sec) -> Sign Up -> OTP -> Home (with bottom nav)
+```
+
+### Navigation Usage
+
+```dart
+// Navigate and replace (no back)
+context.go(AppRoutes.home);
+
+// Push (can pop back)
+context.push(AppRoutes.otp);
+
+// Navigate by name
+context.goNamed('airCargo');
+context.pushNamed('econom');
+
+// Pop back
+context.pop();
+```
+
+### Key Files
+
+| File | Description |
+|------|-------------|
+| `lib/core/router/app_router.dart` | Route configuration and AppRoutes constants |
+| `lib/main_page.dart` | MainPageShell with bottom navigation |
+| `lib/main.dart` | MaterialApp.router setup |
+
 ## Getting Started
 
-This project demonstrates Flutter best practices for building authentication flows with reusable components.
+1. Clone the repository
+2. Run `flutter pub get` to install dependencies
+3. Run `flutter run` to start the app
+
+## Project Structure
+
+```
+lib/
+├── core/
+│   ├── constants/      # App sizing and constants
+│   ├── router/         # go_router configuration
+│   └── theme/          # Colors and typography
+├── presentation/
+│   ├── screens/
+│   │   ├── air_cargo/      # Air freight services
+│   │   ├── car_cargo/      # Truck freight services
+│   │   ├── sea_cargo/      # Sea freight (LCL/FCL)
+│   │   ├── calculate/      # Delivery cost calculator
+│   │   ├── create_parcel/  # Parcel creation flow
+│   │   ├── home/           # Home screen
+│   │   ├── messages/       # Messaging system
+│   │   ├── profile/        # User profile & settings
+│   │   └── register/       # Auth screens
+│   └── widgets/        # Reusable UI components
+└── main.dart
+```
