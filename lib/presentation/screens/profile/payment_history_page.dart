@@ -52,7 +52,7 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(18.0, 12.0, 18.0, 12.0),
+                  padding: EdgeInsets.fromLTRB(18.0 * ratio, 12.0 * ratio, 18.0 * ratio, 12.0 * ratio),
                   child: Row(
                     children: [
                       SvgPicture.asset(
@@ -96,7 +96,7 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(18.0, 12.0, 18.0, 12.0),
+                  padding: EdgeInsets.fromLTRB(18.0 * ratio, 12.0 * ratio, 18.0 * ratio, 12.0 * ratio),
                   child: Row(
                     children: [
                       SvgPicture.asset(
@@ -140,7 +140,7 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(18.0, 12.0, 18.0, 12.0),
+                  padding: EdgeInsets.fromLTRB(18.0 * ratio, 12.0 * ratio, 18.0 * ratio, 12.0 * ratio),
                   child: Column(
                     children: [
                       Row(
@@ -263,7 +263,7 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(18.0, 12.0, 18.0, 12.0),
+                  padding: EdgeInsets.fromLTRB(18.0 * ratio, 12.0 * ratio, 18.0 * ratio, 12.0 * ratio),
                   child: Row(
                     children: [
                       SvgPicture.asset(
@@ -307,7 +307,7 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(18.0, 12.0, 18.0, 12.0),
+                  padding: EdgeInsets.fromLTRB(18.0 * ratio, 12.0 * ratio, 18.0 * ratio, 12.0 * ratio),
                   child: Row(
                     children: [
                       SvgPicture.asset(

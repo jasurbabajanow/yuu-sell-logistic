@@ -8,7 +8,7 @@ import 'package:yuu_sell/presentation/screens/profile/general_settings_page.dart
 import 'package:yuu_sell/presentation/screens/profile/history_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/notifications_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/partnership_page.dart';
-import 'package:yuu_sell/presentation/screens/profile/payment_method_page.dart';
+import 'package:yuu_sell/presentation/screens/profile/payment_history_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/privacy_policy_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/security_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/support_page.dart';
