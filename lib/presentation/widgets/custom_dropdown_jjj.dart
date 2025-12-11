@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
+import 'package:yuu_sell/core/theme/app_font_styles.dart';
 
 class CustomDropdown2 extends StatelessWidget {
   final String label;
@@ -26,12 +27,9 @@ class CustomDropdown2 extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(
-            fontSize: 16 * ratio,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-            
-          ),
+          style: AppFontStyles.s16w500(
+            ratio,
+          ).copyWith(color: AppColors.formDataLabel),
         ),
         SizedBox(height: 10 * ratio),
         GestureDetector(

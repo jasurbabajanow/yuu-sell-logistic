@@ -3,10 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
+import 'package:yuu_sell/core/theme/app_font_styles.dart';
 import 'package:yuu_sell/presentation/screens/home/components/discount_card.dart';
 import 'package:yuu_sell/presentation/screens/home/components/search_bar_widget.dart';
 import 'package:yuu_sell/presentation/screens/home/components/service_card.dart';
 import 'package:yuu_sell/presentation/screens/home/components/tracking_card.dart';
+import 'package:yuu_sell/presentation/widgets/custom_tab_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,9 +17,11 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int selectedTabIndex = 0;
   final List<String> tabs = ['Discounts', 'Locations', 'Shopping'];
+  late final TabController _tabController;
+
   final List<Map<String, String>> services = [
     {
       'title': 'AIR CARGO',
@@ -41,6 +45,15 @@ class _HomePageState extends State<HomePage> {
       'pageRoute': 'seaCargo',
     },
   ];
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 3, vsync: this)
+      ..addListener(() {
+        setState(() {});
+      });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,15 +135,7 @@ class _HomePageState extends State<HomePage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          for (int i = 0; i < tabs.length; i++)
-                            _buildTab(tabs[i], i, ratio),
-                        ],
-                      ),
-                    ),
+                    CustomTabBar(tabController: _tabController, tabs: tabs),
 
                     SizedBox(height: 16 * ratio),
 
@@ -138,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                       DiscountCard(
                         title: 'Autumn Surprise: XBOX Giveaway',
                         description:
-                            'Winner revealed Oct 1, 2025 – follow us o...',
+                            'Winner revealed Oct 1, 2025 - follow us on social media to stay tuned.',
                         date: '18.08.2025',
                         imageUrl:
                             'https://picsum.photos/100/100?random=${20 + i}',
@@ -157,12 +162,10 @@ class _HomePageState extends State<HomePage> {
 
                 // How does it work
                 Text(
-                  'How does it work',
-                  style: TextStyle(
-                    fontSize: 18 * ratio,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.main,
-                  ),
+                  'How does it work?',
+                  style: AppFontStyles.s16w600(
+                    ratio,
+                  ).copyWith(color: AppColors.main),
                 ),
                 SizedBox(height: 16 * ratio),
                 Row(
@@ -183,20 +186,12 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Text(
                             'Calculate',
-                            style: TextStyle(
-                              fontSize: 16 * ratio,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
-                            ),
+                            style: AppFontStyles.s16w600(ratio),
                           ),
                           SizedBox(height: 4 * ratio),
                           Text(
                             'Fill out a quick online form — easy and fast.',
-                            style: TextStyle(
-                              fontSize: 14 * ratio,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.grey.shade600,
-                            ),
+                            style: AppFontStyles.s12w500(ratio),
                           ),
                         ],
                       ),
@@ -205,43 +200,6 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SizedBox(height: 100 * ratio),
               ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTab(String title, int index, double ratio) {
-    final isSelected = selectedTabIndex == index;
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedTabIndex = index;
-        });
-      },
-      child: Container(
-        width: 120 * ratio,
-        padding: EdgeInsets.symmetric(
-          horizontal: 16 * ratio,
-          vertical: 8 * ratio,
-        ),
-        margin: EdgeInsets.only(right: 8 * ratio),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.transparent : Colors.transparent,
-          border: isSelected
-              ? Border(
-                  bottom: BorderSide(color: AppColors.main, width: 2 * ratio),
-                )
-              : null,
-        ),
-        child: Center(
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 14 * ratio,
-              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-              color: isSelected ? AppColors.main : Colors.grey.shade600,
             ),
           ),
         ),

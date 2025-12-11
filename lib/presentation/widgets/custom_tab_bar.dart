@@ -37,7 +37,7 @@ class CustomTabBar extends StatelessWidget {
             ).copyWith(color: tabController.index == 1 ? AppColors.main : null),
           ),
           Text(
-            tabs[1],
+            tabs[2],
             style: AppFontStyles.s14w700(
               ratio,
             ).copyWith(color: tabController.index == 2 ? AppColors.main : null),

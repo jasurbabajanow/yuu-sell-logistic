@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
+import 'package:yuu_sell/core/theme/app_font_styles.dart';
 
 class DiscountCard extends StatelessWidget {
   final String title;
@@ -39,12 +40,12 @@ class DiscountCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(8 * ratio),
             child: Image.network(
               imageUrl,
-              width: 80 * ratio,
-              height: 80 * ratio,
+              width: 92 * ratio,
+              height: 75 * ratio,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) => Container(
-                width: 80 * ratio,
-                height: 80 * ratio,
+                width: 92 * ratio,
+                height: 75 * ratio,
                 color: Colors.grey.shade200,
                 child: const Icon(Icons.image),
               ),
@@ -56,34 +57,16 @@ class DiscountCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 15 * ratio,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
-                ),
+                Text(title, style: AppFontStyles.s14w600(ratio)),
                 SizedBox(height: 4 * ratio),
                 Text(
                   description,
-                  style: TextStyle(
-                    fontSize: 13 * ratio,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey.shade600,
-                  ),
+                  style: AppFontStyles.s12w400(ratio),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 SizedBox(height: 6 * ratio),
-                Text(
-                  date,
-                  style: TextStyle(
-                    fontSize: 12 * ratio,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey.shade500,
-                  ),
-                ),
+                Text(date, style: AppFontStyles.s12w400(ratio)),
               ],
             ),
           ),

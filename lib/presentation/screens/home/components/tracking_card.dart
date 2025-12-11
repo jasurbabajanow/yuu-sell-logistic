@@ -37,20 +37,27 @@ class TrackingCard extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.fromLTRB(22 * ratio, 12 * ratio, 22 * ratio, 0),
+              padding: EdgeInsets.fromLTRB(
+                22 * ratio,
+                12 * ratio,
+                22 * ratio,
+                0,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Air-2025-00124",
-                    style: TextStyle(fontSize: 16 * ratio, fontWeight: FontWeight.w600),
-                  ),
+                  Text("Air-2025-00124", style: AppFontStyles.s16w600(ratio)),
                   Text('23.12.2024'),
                 ],
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(22 * ratio, 12 * ratio, 22 * ratio, 0),
+              padding: EdgeInsets.fromLTRB(
+                22 * ratio,
+                12 * ratio,
+                22 * ratio,
+                0,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
