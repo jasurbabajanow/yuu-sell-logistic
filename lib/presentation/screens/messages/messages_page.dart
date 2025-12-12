@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
-import 'package:yuu_sell/presentation/screens/home/components/search_bar_widget.dart';
+import 'package:yuu_sell/presentation/widgets/search_bar_widget.dart';
 
 class _NotificationItem {
   final String assetPath;
@@ -104,71 +105,83 @@ class MessagesPage extends StatelessWidget {
       hasRedDot: true,
     ),
   ];
+  void _openQRScanner(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const _QRScannerSheet(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final ratio = AppSizes.ratio(context);
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          'Messages',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w600,
-            fontSize: 18,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        backgroundColor: AppColors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: true,
+          title: const Text(
+            'Messages',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
+            ),
           ),
         ),
-      ),
-      floatingActionButton: SizedBox(
-        width: 60 * ratio,
-        height: 60 * ratio,
-        child: FloatingActionButton(
-          backgroundColor: AppColors.main,
-          shape: const CircleBorder(),
-          onPressed: () {},
-          child: SvgPicture.asset('assets/icons/scan.svg'),
+        floatingActionButton: SizedBox(
+          width: 60 * ratio,
+          height: 60 * ratio,
+          child: FloatingActionButton(
+            backgroundColor: AppColors.main,
+            shape: const CircleBorder(),
+            onPressed: () => _openQRScanner(context),
+            child: SvgPicture.asset('assets/icons/scan.svg'),
+          ),
         ),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          const SearchBarWidget(),
-          SizedBox(height: 16 * ratio),
-          const Text(
-            'Today',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey,
+        body: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            const SearchBarWidget(),
+            SizedBox(height: 16 * ratio),
+            const Text(
+              'Today',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey,
+              ),
             ),
-          ),
-          const SizedBox(height: 12),
-          ..._todayNotifications.map(
-            (item) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: _buildNotificationItem(item),
+            const SizedBox(height: 12),
+            ..._todayNotifications.map(
+              (item) => Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: _buildNotificationItem(item),
+              ),
             ),
-          ),
-          const SizedBox(height: 12),
-          const Text(
-            'Yesterday',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey,
+            const SizedBox(height: 12),
+            const Text(
+              'Yesterday',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey,
+              ),
             ),
-          ),
-          const SizedBox(height: 12),
-          ..._yesterdayNotifications.map(
-            (item) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: _buildNotificationItem(item),
+            const SizedBox(height: 12),
+            ..._yesterdayNotifications.map(
+              (item) => Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: _buildNotificationItem(item),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -242,6 +255,100 @@ class MessagesPage extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
             ),
+        ],
+      ),
+    );
+  }
+}
+
+class _QRScannerSheet extends StatefulWidget {
+  const _QRScannerSheet();
+
+  @override
+  State<_QRScannerSheet> createState() => _QRScannerSheetState();
+}
+
+class _QRScannerSheetState extends State<_QRScannerSheet> {
+  final MobileScannerController _controller = MobileScannerController();
+  bool _hasScanned = false;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onDetect(BarcodeCapture capture) {
+    if (_hasScanned) return;
+    final barcode = capture.barcodes.firstOrNull;
+    if (barcode?.rawValue != null) {
+      _hasScanned = true;
+      Navigator.of(context).pop(barcode!.rawValue);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Scanned: ${barcode.rawValue}')));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.8,
+      decoration: const BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Scan QR Code',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Icon(Icons.close, color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: MobileScanner(
+                  controller: _controller,
+                  onDetect: _onDetect,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  onPressed: () => _controller.toggleTorch(),
+                  icon: const Icon(Icons.flash_on, color: Colors.white),
+                ),
+                const SizedBox(width: 32),
+                IconButton(
+                  onPressed: () => _controller.switchCamera(),
+                  icon: const Icon(Icons.cameraswitch, color: Colors.white),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

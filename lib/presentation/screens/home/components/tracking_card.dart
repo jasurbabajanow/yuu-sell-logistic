@@ -5,7 +5,8 @@ import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';
 
 class TrackingCard extends StatelessWidget {
-  const TrackingCard({super.key});
+  final String title;
+  const TrackingCard({super.key, this.title = "Air-2025-00124"});
 
   static const List<String> _statuses = [
     'DXB',
@@ -30,9 +31,9 @@ class TrackingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final ratio = AppSizes.ratio(context);
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: EdgeInsets.only(bottom: 20 * ratio),
       child: Container(
-        height: 130 * ratio,
+        height: 134 * ratio,
         decoration: _cardDecoration,
         child: Column(
           children: [
@@ -46,7 +47,7 @@ class TrackingCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Air-2025-00124", style: AppFontStyles.s16w600(ratio)),
+                  Text(title, style: AppFontStyles.s16w600(ratio)),
                   Text('23.12.2024'),
                 ],
               ),
@@ -68,7 +69,7 @@ class TrackingCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 60 * ratio,
+              height: 64 * ratio,
               child: Center(
                 child: FixedTimeline.tileBuilder(
                   theme: TimelineThemeData(

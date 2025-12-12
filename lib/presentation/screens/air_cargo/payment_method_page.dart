@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';
+import 'package:yuu_sell/presentation/widgets/yuu_sell_payment.dart';
 
 class PaymentMethodPage extends StatelessWidget {
   const PaymentMethodPage({super.key});
@@ -58,28 +59,34 @@ class PaymentMethodPage extends StatelessWidget {
               ),
               child: Padding(
                 padding: EdgeInsets.all(15.0 * ratio),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/yuusell.svg',
-                      height: 30 * ratio,
-                      width: 300 * ratio,
-                    ),
-                    SizedBox(width: 10 * ratio),
-                    Text(
-                      "YuuSell",
-                      style: AppFontStyles.s12w600(
-                        ratio,
-                      ).copyWith(fontSize: 16 * ratio),
-                    ),
-                    Spacer(),
-                    Text(
-                      '\$44.50',
-                      style: AppFontStyles.s12w600(
-                        ratio,
-                      ).copyWith(fontSize: 16 * ratio),
-                    ),
-                  ],
+                child: GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => YuuSellPayment()),
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/yuusell.svg',
+                        height: 30 * ratio,
+                        width: 300 * ratio,
+                      ),
+                      SizedBox(width: 10 * ratio),
+                      Text(
+                        "YuuSell",
+                        style: AppFontStyles.s12w600(
+                          ratio,
+                        ).copyWith(fontSize: 16 * ratio),
+                      ),
+                      Spacer(),
+                      Text(
+                        '\$44.50',
+                        style: AppFontStyles.s12w600(
+                          ratio,
+                        ).copyWith(fontSize: 16 * ratio),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -116,10 +123,12 @@ class PaymentMethodPage extends StatelessWidget {
                       ).copyWith(fontSize: 16 * ratio),
                     ),
                     Spacer(),
-                    Text('\$52.20',
-                        style: AppFontStyles.s12w600(
-                          ratio,
-                        ).copyWith(fontSize: 16 * ratio)),
+                    Text(
+                      '\$52.20',
+                      style: AppFontStyles.s12w600(
+                        ratio,
+                      ).copyWith(fontSize: 16 * ratio),
+                    ),
                   ],
                 ),
               ),
@@ -157,10 +166,12 @@ class PaymentMethodPage extends StatelessWidget {
                       ).copyWith(fontSize: 16 * ratio),
                     ),
                     Spacer(),
-                    Text('\$61.20',
-                        style: AppFontStyles.s12w600(
-                          ratio,
-                        ).copyWith(fontSize: 16 * ratio)),
+                    Text(
+                      '\$61.20',
+                      style: AppFontStyles.s12w600(
+                        ratio,
+                      ).copyWith(fontSize: 16 * ratio),
+                    ),
                   ],
                 ),
               ),
@@ -198,10 +209,12 @@ class PaymentMethodPage extends StatelessWidget {
                       ).copyWith(fontSize: 16 * ratio),
                     ),
                     Spacer(),
-                    Text('\$66.20',
-                        style: AppFontStyles.s12w600(
-                          ratio,
-                        ).copyWith(fontSize: 16 * ratio)),
+                    Text(
+                      '\$66.20',
+                      style: AppFontStyles.s12w600(
+                        ratio,
+                      ).copyWith(fontSize: 16 * ratio),
+                    ),
                   ],
                 ),
               ),

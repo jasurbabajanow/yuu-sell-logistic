@@ -13,6 +13,7 @@ import 'package:yuu_sell/presentation/screens/register/otp_page.dart';
 import 'package:yuu_sell/presentation/screens/register/sign_up_page.dart';
 import 'package:yuu_sell/presentation/screens/register/splash_screen.dart';
 import 'package:yuu_sell/presentation/screens/sea_cargo/sea_cargo_page.dart';
+import 'package:yuu_sell/presentation/screens/truck/truck_page.dart';
 
 /// Route paths
 class AppRoutes {
@@ -42,7 +43,7 @@ class AppRoutes {
 
 /// GoRouter configuration
 final GoRouter appRouter = GoRouter(
-  initialLocation: AppRoutes.home,
+  initialLocation: AppRoutes.splash,
   debugLogDiagnostics: true,
   routes: [
     // Splash screen (3 sec timer → Register)
@@ -136,8 +137,7 @@ final GoRouter appRouter = GoRouter(
             GoRoute(
               path: AppRoutes.truck,
               name: 'truck',
-              builder: (context, state) =>
-                  const Center(child: Text('Truck Page')),
+              builder: (context, state) => const TruckPage(),
             ),
           ],
         ),
