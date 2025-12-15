@@ -26,6 +26,9 @@ class AppFontStyles {
   static TextStyle s14w700(double ratio) =>
       GoogleFonts.poppins(fontWeight: FontWeight.w700, fontSize: 14 * ratio);
 
+  static TextStyle s15w500(double ratio) =>
+      GoogleFonts.poppins(fontWeight: FontWeight.w500, fontSize: 15 * ratio);
+
   static TextStyle s15w600(double ratio) =>
       GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 15 * ratio);
 

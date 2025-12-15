@@ -6,6 +6,9 @@ import 'package:yuu_sell/presentation/screens/air_cargo/econom_page.dart';
 import 'package:yuu_sell/presentation/screens/air_cargo/express_page.dart';
 import 'package:yuu_sell/presentation/screens/calculate/delivery_calculate_page.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/car_cargo_page.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/sub_pages/auction_page.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/sub_pages/personal_page.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/sub_pages/warning_page.dart';
 import 'package:yuu_sell/presentation/screens/home/home_page.dart';
 import 'package:yuu_sell/presentation/screens/messages/messages_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/profile_page.dart';
@@ -39,6 +42,11 @@ class AppRoutes {
   // Air cargo sub-routes
   static const String econom = 'econom';
   static const String express = 'express';
+
+  // Car cargo sub-routes
+  static const String auction = 'auction';
+  static const String personal = 'personal';
+  static const String carCargoWarning = 'warning';
 }
 
 /// GoRouter configuration
@@ -111,6 +119,23 @@ final GoRouter appRouter = GoRouter(
                   path: AppRoutes.carCargo,
                   name: 'carCargo',
                   builder: (context, state) => const CarCargoPage(),
+                  routes: [
+                    GoRoute(
+                      path: AppRoutes.auction,
+                      name: 'auction',
+                      builder: (context, state) => const AuctionPage(),
+                    ),
+                    GoRoute(
+                      path: AppRoutes.personal,
+                      name: 'personal',
+                      builder: (context, state) => const PersonalPage(),
+                    ),
+                    GoRoute(
+                      path: AppRoutes.carCargoWarning,
+                      name: 'warning',
+                      builder: (context, state) => const WarningPage(),
+                    ),
+                  ],
                 ),
                 GoRoute(
                   path: AppRoutes.seaCargo,

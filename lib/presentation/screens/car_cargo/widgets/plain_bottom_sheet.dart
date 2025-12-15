@@ -1,18 +1,27 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
+import 'package:yuu_sell/core/theme/app_font_styles.dart';
 import 'package:yuu_sell/presentation/widgets/custom_button.dart';
 
-class ChangeUserInfoSheet extends StatefulWidget {
-  const ChangeUserInfoSheet({super.key});
+class PlainBottomSheet extends StatefulWidget {
+  final List<String> items;
+  const PlainBottomSheet({super.key, required this.items});
 
   @override
-  State<ChangeUserInfoSheet> createState() => _ChangeUserInfoSheetState();
+  State<PlainBottomSheet> createState() => _PlainBottomSheetState();
 }
 
-class _ChangeUserInfoSheetState extends State<ChangeUserInfoSheet> {
-  String selectedOption = 'Coport';
+class _PlainBottomSheetState extends State<PlainBottomSheet> {
+  late String selectedOption;
+
+  @override
+  void initState() {
+    selectedOption = widget.items[0];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +42,21 @@ class _ChangeUserInfoSheetState extends State<ChangeUserInfoSheet> {
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 24),
-          _buildRadioOption('Coport'),
-          _buildRadioOption('Personal'),
+          for (var i = 0; i < widget.items.length; i++)
+            _buildRadioOption(widget.items[i]),
+          _buildRadioOption('IAAI'),
+          _buildRadioOption('MANHEIM'),
+          _buildRadioOption('SALVAGENOV'),
           _buildRadioOption('Other'),
           const SizedBox(height: 24),
-          CustomButton(onTap: (){}, text: 'Save',)
+          CustomButton(onTap: () {}, text: 'Save'),
         ],
       ),
     );
   }
 
   Widget _buildRadioOption(String option) {
+    final ratio = AppSizes.ratio(context);
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -70,7 +83,9 @@ class _ChangeUserInfoSheetState extends State<ChangeUserInfoSheet> {
           children: [
             Text(
               option,
-              style: const TextStyle(fontSize: 15, color: Colors.black87),
+              style: AppFontStyles.s14w600(
+                ratio,
+              ).copyWith(color: Color(0xff222222)),
             ),
             ?selectedOption == option
                 ? Center(

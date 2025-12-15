@@ -6,6 +6,7 @@ import 'package:yuu_sell/core/theme/app_font_styles.dart';
 import 'package:yuu_sell/presentation/screens/home/components/discount_card.dart';
 import 'package:yuu_sell/presentation/screens/sea_cargo/fcl_shipping_page.dart';
 import 'package:yuu_sell/presentation/screens/sea_cargo/lcl_shipping_page.dart';
+import 'package:yuu_sell/presentation/widgets/custom_tab_bar.dart';
 
 class SeaCargoPage extends StatefulWidget {
   const SeaCargoPage({super.key});
@@ -14,9 +15,21 @@ class SeaCargoPage extends StatefulWidget {
   State<SeaCargoPage> createState() => _SeaCargoPageState();
 }
 
-class _SeaCargoPageState extends State<SeaCargoPage> {
+class _SeaCargoPageState extends State<SeaCargoPage>
+    with TickerProviderStateMixin {
   int selectedTabIndex = 0;
   final List<String> tabs = ['News', 'Discounts', 'Shopping'];
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 3, vsync: this)
+      ..addListener(() {
+        setState(() {});
+      });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final ratio = AppSizes.ratio(context);
@@ -88,7 +101,10 @@ class _SeaCargoPageState extends State<SeaCargoPage> {
                               height: 30 * ratio,
                             ),
                             SizedBox(width: 15 * ratio),
-                            Text("LCL Shipping", style: AppFontStyles.s16w600(ratio)),
+                            Text(
+                              "LCL Shipping",
+                              style: AppFontStyles.s16w600(ratio),
+                            ),
                           ],
                         ),
                       ),
@@ -249,13 +265,7 @@ class _SeaCargoPageState extends State<SeaCargoPage> {
                 ],
               ),
               SizedBox(height: 12 * ratio),
-              Row(
-                children: tabs.asMap().entries.map((entry) {
-                  final index = entry.key;
-                  final tab = entry.value;
-                  return _buildTab(tab, index, ratio);
-                }).toList(),
-              ),
+              CustomTabBar(tabController: _tabController, tabs: tabs),
               SizedBox(height: 16 * ratio),
 
               // Discount Cards List

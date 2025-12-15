@@ -27,7 +27,7 @@ class CustomDropdown2 extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppFontStyles.s16w500(
+          style: AppFontStyles.s14w500(
             ratio,
           ).copyWith(color: AppColors.formDataLabel),
         ),

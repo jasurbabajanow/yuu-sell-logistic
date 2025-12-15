@@ -21,6 +21,7 @@ class CustomTabBar extends StatelessWidget {
         controller: tabController,
         dividerColor: Colors.transparent,
         indicatorColor: AppColors.main,
+        labelColor: AppColors.main,
         indicatorPadding: EdgeInsets.only(top: 10 * ratio),
         indicatorSize: TabBarIndicatorSize.tab,
         tabs: [

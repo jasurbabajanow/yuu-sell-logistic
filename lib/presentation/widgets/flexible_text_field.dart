@@ -7,11 +7,13 @@ class FlexibleTextField extends StatelessWidget {
   final String hintText;
   final bool isPrefix;
   final bool isSuffix;
+  final int height;
   const FlexibleTextField({
     super.key,
     required this.hintText,
     this.isPrefix = false,
     this.isSuffix = false,
+    this.height = 36,
   });
 
   @override
@@ -23,7 +25,7 @@ class FlexibleTextField extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.textFieldBorder),
       ),
-      height: 36 * ratio,
+      height: height * ratio,
       width: double.infinity,
       child: Row(
         children: [

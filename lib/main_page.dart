@@ -1,63 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
+import 'package:yuu_sell/core/theme/app_font_styles.dart';
 
 /// Shell widget for bottom navigation with go_router
 class MainPageShell extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
 
-  const MainPageShell({
-    super.key,
-    required this.navigationShell,
-  });
+  const MainPageShell({super.key, required this.navigationShell});
 
   @override
   Widget build(BuildContext context) {
+    final ratio = AppSizes.ratio(context);
     return Scaffold(
       body: navigationShell,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: navigationShell.currentIndex,
-        onTap: (index) {
-          navigationShell.goBranch(
-            index,
-            initialLocation: index == navigationShell.currentIndex,
-          );
-        },
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: AppColors.main,
-        unselectedItemColor: Colors.grey,
-        selectedLabelStyle: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
+      bottomNavigationBar: SizedBox(
+        height: 90 * ratio,
+        child: BottomNavigationBar(
+          currentIndex: navigationShell.currentIndex,
+          onTap: (index) {
+            navigationShell.goBranch(
+              index,
+              initialLocation: index == navigationShell.currentIndex,
+            );
+          },
+          backgroundColor: AppColors.white,
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: AppColors.main,
+          unselectedItemColor: Colors.grey,
+          selectedLabelStyle: AppFontStyles.s12w600(ratio),
+          unselectedLabelStyle: AppFontStyles.s12w400(ratio),
+          items: [
+            _buildNavBarItem(
+              'assets/icons/home.svg',
+              'assets/icons/home_outlined.svg',
+              'Home',
+            ),
+            _buildNavBarItem(
+              'assets/icons/message.svg',
+              'assets/icons/message_outlined.svg',
+              'Message',
+            ),
+            _buildNavBarItem(
+              'assets/icons/truck.svg',
+              'assets/icons/truck_outlined.svg',
+              'Truck',
+            ),
+            _buildNavBarItem(
+              'assets/icons/profile.svg',
+              'assets/icons/profile_outlined.svg',
+              'Profile',
+            ),
+          ],
         ),
-        unselectedLabelStyle: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-        ),
-        items: [
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/home.svg'),
-            activeIcon: SvgPicture.asset('assets/icons/home_outlined.svg'),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/message.svg'),
-            activeIcon: SvgPicture.asset('assets/icons/message_outlined.svg'),
-            label: 'Message',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/truck.svg'),
-            activeIcon: SvgPicture.asset('assets/icons/truck_outlined.svg'),
-            label: 'Truck',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/profile.svg'),
-            activeIcon: SvgPicture.asset('assets/icons/profile_outlined.svg'),
-            label: 'Profile',
-          ),
-        ],
       ),
+    );
+  }
+
+  _buildNavBarItem(String icon, String activeIcon, String label) {
+    return BottomNavigationBarItem(
+      icon: SvgPicture.asset(icon),
+      activeIcon: SvgPicture.asset(activeIcon),
+      label: label,
     );
   }
 }

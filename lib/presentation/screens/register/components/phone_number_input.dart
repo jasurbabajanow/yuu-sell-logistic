@@ -59,6 +59,7 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
               setSelectorButtonAsPrefixIcon: false,
               leadingPadding: 16,
               trailingSpace: false,
+              useBottomSheetSafeArea: true,
             ),
             ignoreBlank: false,
             autoValidateMode: AutovalidateMode.disabled,

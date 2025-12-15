@@ -108,6 +108,65 @@ class _SignUpPageState extends State<SignUpPage> {
                             });
                           },
                         ),
+                        SizedBox(height: 30 * ratio),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 46 * ratio,
+                                decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(
+                                    10 * ratio,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          right: 4 * ratio,
+                                        ),
+                                        child: SvgPicture.asset(
+                                          'assets/icons/google.svg',
+                                        ),
+                                      ),
+                                      Text(
+                                        'Google',
+                                        style: AppFontStyles.s16w500(ratio),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 14 * ratio),
+                            Expanded(
+                              child: Container(
+                                height: 46 * ratio,
+                                decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(
+                                    10 * ratio,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.apple),
+                                      Text(
+                                        'Apple',
+                                        style: AppFontStyles.s16w500(ratio),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

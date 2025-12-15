@@ -27,21 +27,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       'title': 'AIR CARGO',
       'description':
           'We receive, label, pack, and ship your products directly to Amazon FBA warehouses. 100% compliant with Amazon’s requirements — no delays or returns.',
-      'imagePath': 'assets/images/air_cargo_card.svg',
+      'imagePath': 'assets/images/air.svg',
       'pageRoute': 'airCargo',
     },
     {
-      'title': 'TRUCK CARGO',
+      'title': 'AUTO CARGO',
       'description':
           'We receive, label, pack, and ship your products directly to Amazon FBA warehouses. 100% compliant with Amazon’s requirements — no delays or returns.',
-      'imagePath': 'assets/images/air_cargo_card.svg',
+      'imagePath': 'assets/images/copart.svg',
       'pageRoute': 'carCargo',
     },
     {
       'title': 'SEA CARGO',
       'description':
           'We receive, label, pack, and ship your products directly to Amazon FBA warehouses. 100% compliant with Amazon’s requirements — no delays or returns.',
-      'imagePath': 'assets/images/air_cargo_card.svg',
+      'imagePath': 'assets/images/sea.svg',
       'pageRoute': 'seaCargo',
     },
   ];
