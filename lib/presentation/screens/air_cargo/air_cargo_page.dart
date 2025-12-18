@@ -1,10 +1,10 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/presentation/screens/air_cargo/components/construction_row.dart';
-import 'package:yuu_sell/presentation/screens/home/components/discount_card.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/widgets/discounts_tabbar_view.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/widgets/news_tabbar_view.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/widgets/shopping_tabbar_view.dart';
 import 'package:yuu_sell/presentation/widgets/custom_tab_bar.dart';
 import 'package:yuu_sell/presentation/widgets/delivery_type_box.dart';
 
@@ -28,6 +28,12 @@ class _AirCargoPageState extends State<AirCargoPage>
         setState(() {});
       });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -96,14 +102,20 @@ class _AirCargoPageState extends State<AirCargoPage>
               // Tab Bar here with 3 tabs
               CustomTabBar(tabController: _tabController, tabs: tabs),
               SizedBox(height: 16 * ratio),
-              for (int i = 0; i < 5; i++)
-                DiscountCard(
-                  title: 'Autumn Surprise: XBOX Giveaway',
-                  description:
-                      'Winner revealed Oct 1, 2025 - follow us on social media to stay tuned.',
-                  date: '18.08.2025',
-                  imageUrl: 'https://picsum.photos/100/100?random=${20 + i}',
+              SizedBox(
+                height: 600 * ratio, // Adjust height as needed
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    // News Tab
+                    NewsTabbarView(),
+                    // Discounts Tab
+                    DiscountsTabbarView(),
+                    // Shopping Tab
+                    ShoppingTabbarView(),
+                  ],
                 ),
+              ),
             ],
           ),
         ),

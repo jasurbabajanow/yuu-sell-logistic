@@ -66,7 +66,7 @@ class _FCLPageState extends State<FCLPage> {
               CustomDropdown2(
                 label: 'Container type:',
                 hint: '20ft Standard',
-                onTap: () => _showContainerType(context), // TODO
+                onTap: () => _showContainerType(context), 
               ),
               SizedBox(height: 15 * ratio),
               CustomTextField2(title: 'HS code', hintText: '022020'),
@@ -74,7 +74,7 @@ class _FCLPageState extends State<FCLPage> {
               CustomDropdown2(
                 label: 'Delivery type:',
                 hint: 'Door to door',
-                onTap: () => _showDeliveryType(context), // TODO
+                onTap: () => _showDeliveryType(context),
               ),
               SizedBox(height: 15 * ratio),
               CustomTextField2(title: 'Commodity description:', hintText: 'Short description'),

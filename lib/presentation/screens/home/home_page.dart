@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';
-import 'package:yuu_sell/presentation/screens/home/components/discount_card.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/widgets/discounts_tabbar_view.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/widgets/shopping_tabbar_view.dart';
 import 'package:yuu_sell/presentation/widgets/search_bar_widget.dart';
 import 'package:yuu_sell/presentation/screens/home/components/service_card.dart';
 import 'package:yuu_sell/presentation/screens/home/components/tracking_card.dart';
@@ -53,6 +54,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         setState(() {});
       });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -141,15 +148,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
                       SizedBox(height: 16 * ratio),
 
-                      for (int i = 0; i < 5; i++)
-                        DiscountCard(
-                          title: 'Autumn Surprise: XBOX Giveaway',
-                          description:
-                              'Winner revealed Oct 1, 2025 - follow us on social media to stay tuned.',
-                          date: '18.08.2025',
-                          imageUrl:
-                              'https://picsum.photos/100/100?random=${20 + i}',
+                      SizedBox(
+                        height: 600 * ratio,
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: [
+                            DiscountsTabbarView(),
+                            //TODO locations page
+                            ShoppingTabbarView(),
+                            ShoppingTabbarView(),
+
+                          ],
                         ),
+                      ),
                     ],
                   ),
                   SizedBox(height: 20 * ratio),

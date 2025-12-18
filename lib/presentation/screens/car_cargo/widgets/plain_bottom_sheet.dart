@@ -44,10 +44,6 @@ class _PlainBottomSheetState extends State<PlainBottomSheet> {
           const SizedBox(height: 24),
           for (var i = 0; i < widget.items.length; i++)
             _buildRadioOption(widget.items[i]),
-          _buildRadioOption('IAAI'),
-          _buildRadioOption('MANHEIM'),
-          _buildRadioOption('SALVAGENOV'),
-          _buildRadioOption('Other'),
           const SizedBox(height: 24),
           CustomButton(onTap: () {}, text: 'Save'),
         ],

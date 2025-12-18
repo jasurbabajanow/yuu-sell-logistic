@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/presentation/screens/air_cargo/components/construction_row.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/widgets/discounts_tabbar_view.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/widgets/news_tabbar_view.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/widgets/shopping_tabbar_view.dart';
 import 'package:yuu_sell/presentation/widgets/custom_tab_bar.dart';
 import 'package:yuu_sell/presentation/widgets/delivery_type_box.dart';
-import 'package:yuu_sell/presentation/widgets/shopping_card.dart';
 
 class CarCargoPage extends StatefulWidget {
   const CarCargoPage({super.key});
@@ -40,6 +42,12 @@ class _CarCargoPageState extends State<CarCargoPage>
         setState(() {});
       });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -102,14 +110,21 @@ class _CarCargoPageState extends State<CarCargoPage>
 
               CustomTabBar(tabController: _tabController, tabs: tabs),
 
-              for (int i = 0; i < 5; i++)
-                ShoppingCard(
-                  title: 'Copart',
-                  description:
-                      'One-stop shop for fashion, gadgets, home & hobby items. Great deals, fast delivery.',
-                  date: '',
-                  imageUrl: mockLogos[i],
+              SizedBox(height: 16 * ratio),
+              SizedBox(
+                height: 600 * ratio, // Adjust height as needed
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    // News Tab
+                    NewsTabbarView(),
+                    // Discounts Tab
+                    DiscountsTabbarView(),
+                    // Shopping Tab
+                    ShoppingTabbarView(),
+                  ],
                 ),
+              ),
             ],
           ),
         ),

@@ -3,7 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';
-import 'package:yuu_sell/presentation/screens/home/components/discount_card.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/widgets/discounts_tabbar_view.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/widgets/news_tabbar_view.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/widgets/shopping_tabbar_view.dart';
 import 'package:yuu_sell/presentation/screens/sea_cargo/fcl_shipping_page.dart';
 import 'package:yuu_sell/presentation/screens/sea_cargo/lcl_shipping_page.dart';
 import 'package:yuu_sell/presentation/widgets/custom_tab_bar.dart';
@@ -28,6 +30,12 @@ class _SeaCargoPageState extends State<SeaCargoPage>
         setState(() {});
       });
     super.initState();
+  }
+  
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -117,7 +125,7 @@ class _SeaCargoPageState extends State<SeaCargoPage>
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const FCLPage(), // TODO
+                            builder: (context) => const FCLPage(),
                           ),
                         );
                       },
@@ -269,51 +277,21 @@ class _SeaCargoPageState extends State<SeaCargoPage>
               SizedBox(height: 16 * ratio),
 
               // Discount Cards List
-              ...List.generate(
-                5,
-                (index) => DiscountCard(
-                  title: 'Autumn Surprise: XBOX Giveaway',
-                  description: 'Winner revealed Oct 1, 2025 – follow us o...',
-                  date: '18.08.2025',
-                  imageUrl:
-                      'https://picsum.photos/100/100?random=${20 + index}',
+              SizedBox(
+                height: 600 * ratio, // Adjust height as needed
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    // News Tab
+                    NewsTabbarView(),
+                    // Discounts Tab
+                    DiscountsTabbarView(),
+                    // Shopping Tab
+                    ShoppingTabbarView(),
+                  ],
                 ),
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTab(String title, int index, double ratio) {
-    final isSelected = selectedTabIndex == index;
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedTabIndex = index;
-        });
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 16 * ratio,
-          vertical: 8 * ratio,
-        ),
-        margin: EdgeInsets.only(right: 8 * ratio),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.transparent : Colors.transparent,
-          border: isSelected
-              ? Border(
-                  bottom: BorderSide(color: AppColors.main, width: 2 * ratio),
-                )
-              : null,
-        ),
-        child: Text(
-          title,
-          style: TextStyle(
-            fontSize: 14 * ratio,
-            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-            color: isSelected ? AppColors.main : Colors.grey.shade600,
           ),
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';
 
@@ -36,13 +35,17 @@ class ShoppingCard extends StatelessWidget {
       child: Row(
         children: [
           // Image
-          SvgPicture.asset(
-            imageUrl,
-            errorBuilder: (context, error, stackTrace) => Container(
-              width: 92 * ratio,
-              height: 75 * ratio,
-              color: Colors.grey.shade200,
-              child: const Icon(Icons.image),
+          SizedBox(
+            width: 92 * ratio,
+            height: 75 * ratio,
+            child: Image.asset(
+              imageUrl,
+              errorBuilder: (context, error, stackTrace) => Container(
+                width: 92 * ratio,
+                height: 75 * ratio,
+                color: Colors.grey.shade200,
+                child: const Icon(Icons.image),
+              ),
             ),
           ),
           SizedBox(width: 12 * ratio),

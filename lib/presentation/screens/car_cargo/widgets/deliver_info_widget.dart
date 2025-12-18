@@ -4,7 +4,6 @@ import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/widgets/plain_bottom_sheet.dart';
 import 'package:yuu_sell/presentation/widgets/custom_dropdown_jjj.dart';
-import 'package:yuu_sell/presentation/widgets/custom_text_field.dart';
 import 'package:yuu_sell/presentation/widgets/flexible_text_field.dart';
 
 class DeliverInfoWidget extends StatelessWidget {
