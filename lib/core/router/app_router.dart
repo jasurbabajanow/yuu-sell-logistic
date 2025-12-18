@@ -4,6 +4,7 @@ import 'package:yuu_sell/main_page.dart';
 import 'package:yuu_sell/presentation/screens/air_cargo/air_cargo_page.dart';
 import 'package:yuu_sell/presentation/screens/air_cargo/econom_page.dart';
 import 'package:yuu_sell/presentation/screens/air_cargo/express_page.dart';
+import 'package:yuu_sell/presentation/screens/air_cargo/payment_method_page.dart';
 import 'package:yuu_sell/presentation/screens/calculate/delivery_calculate_page.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/car_cargo_page.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/sub_pages/auction_page.dart';
@@ -42,6 +43,7 @@ class AppRoutes {
   // Air cargo sub-routes
   static const String econom = 'econom';
   static const String express = 'express';
+  static const String payment = 'payment';
 
   // Car cargo sub-routes
   static const String auction = 'auction';
@@ -111,6 +113,11 @@ final GoRouter appRouter = GoRouter(
                       path: AppRoutes.express,
                       name: 'express',
                       builder: (context, state) => const ExpressPage(),
+                    ),
+                    GoRoute(
+                      path: AppRoutes.payment,
+                      name: 'payment',
+                      builder: (context, state) => const PaymentMethodPage(),
                     ),
                   ],
                 ),

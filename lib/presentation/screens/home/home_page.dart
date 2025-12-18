@@ -6,6 +6,7 @@ import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/widgets/discounts_tabbar_view.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/widgets/shopping_tabbar_view.dart';
+import 'package:yuu_sell/presentation/screens/home/components/locations_tabbar_view.dart';
 import 'package:yuu_sell/presentation/widgets/search_bar_widget.dart';
 import 'package:yuu_sell/presentation/screens/home/components/service_card.dart';
 import 'package:yuu_sell/presentation/screens/home/components/tracking_card.dart';
@@ -154,8 +155,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           controller: _tabController,
                           children: [
                             DiscountsTabbarView(),
-                            //TODO locations page
-                            ShoppingTabbarView(),
+                            LocationsTabbarView(),
                             ShoppingTabbarView(),
 
                           ],

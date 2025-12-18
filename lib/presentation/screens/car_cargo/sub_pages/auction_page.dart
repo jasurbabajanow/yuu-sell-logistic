@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
-import 'package:yuu_sell/presentation/screens/car_cargo/sub_pages/warning_page.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/widgets/calendar_widget.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/widgets/deliver_info_widget.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/widgets/payment_sheet_widget.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/widgets/plain_bottom_sheet.dart';
 import 'package:yuu_sell/presentation/widgets/custom_dropdown_jjj.dart';
 
@@ -192,10 +192,7 @@ class _AuctionPageState extends State<AuctionPage> {
                 height: 52,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => WarningPage()),
-                    );
+                    _showPaymentSheet(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 12, 62, 245),
@@ -290,6 +287,13 @@ class _AuctionPageState extends State<AuctionPage> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => const CalendarRangeBottomSheet(),
+    );
+  }
+
+  void _showPaymentSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => const PaymentSheetWidget(),
     );
   }
 }

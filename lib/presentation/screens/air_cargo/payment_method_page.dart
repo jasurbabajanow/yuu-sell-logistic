@@ -42,28 +42,28 @@ class PaymentMethodPage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Container(
-              height: 60 * ratio,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(20 * ratio),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0xff000000).withOpacity(0.05),
-                    spreadRadius: 0,
-                    blurRadius: 14,
-                    offset: Offset(0, 9 * ratio),
-                  ),
-                ],
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => YuuSellPayment()),
               ),
-              child: Padding(
-                padding: EdgeInsets.all(15.0 * ratio),
-                child: GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => YuuSellPayment()),
-                  ),
+              child: Container(
+                height: 60 * ratio,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(20 * ratio),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xff000000).withOpacity(0.05),
+                      spreadRadius: 0,
+                      blurRadius: 14,
+                      offset: Offset(0, 9 * ratio),
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(15.0 * ratio),
                   child: Row(
                     children: [
                       SvgPicture.asset(

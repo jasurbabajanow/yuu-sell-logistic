@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
-import 'package:yuu_sell/presentation/screens/air_cargo/payment_method_page.dart';
 import 'package:yuu_sell/presentation/widgets/custom_button.dart';
 import 'package:yuu_sell/presentation/widgets/custom_dropdown_jjj.dart';
 import 'package:yuu_sell/presentation/widgets/custom_text_field2.dart';
@@ -80,11 +80,12 @@ class _EconomPageState extends State<EconomPage> {
                 ),
               ),
               SizedBox(height: 15 * ratio),
-              CustomButton(onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const PaymentMethodPage();
-                }));
-              }, text: 'Next'),
+              CustomButton(
+                onTap: () {
+                  context.pushNamed('payment');
+                },
+                text: 'Next',
+              ),
             ],
           ),
         ),

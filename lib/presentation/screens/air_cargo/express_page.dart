@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/presentation/widgets/custom_button.dart';
@@ -79,7 +80,9 @@ class _ExpressPageState extends State<ExpressPage> {
                 ),
               ),
               SizedBox(height: 15 * ratio),
-              CustomButton(onTap: () {}, text: 'Next'),
+              CustomButton(onTap: () {
+                context.pushNamed('payment');
+              }, text: 'Next'),
             ],
           ),
         ),
