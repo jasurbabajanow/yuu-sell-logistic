@@ -293,6 +293,8 @@ class _AuctionPageState extends State<AuctionPage> {
   void _showPaymentSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
       builder: (context) => const PaymentSheetWidget(),
     );
   }
