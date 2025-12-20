@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';

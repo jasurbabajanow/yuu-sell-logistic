@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';
+import 'package:yuu_sell/presentation/widgets/create_parcel_result.dart';
 
 class WarningPage extends StatelessWidget {
   const WarningPage({super.key});
@@ -52,7 +52,14 @@ class WarningPage extends StatelessWidget {
                 horizontal: 80 * ratio,
               ),
               child: InkWell(
-                onTap: () => context.go('/home'),
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CreateParcelResult(),
+                      ),
+                    );
+                },
                 child: Container(
                   decoration: BoxDecoration(
                     color: AppColors.main,

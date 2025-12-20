@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/presentation/screens/calculate/components/custom_dropdown.dart';
@@ -15,7 +16,8 @@ class CreateParcelStepsPage extends StatefulWidget {
 }
 
 class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
-  int currentStep = 1; // 1 = Delivery options, 2 = Sender, 3 = Receiver, 4 = Summary
+  int currentStep =
+      1; // 1 = Delivery options, 2 = Sender, 3 = Receiver, 4 = Summary
 
   void _goToNextStep() {
     if (currentStep < 4) {
@@ -23,8 +25,7 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
         currentStep++;
       });
     } else {
-      // Process payment on final step
-      // TODO: Implement payment logic
+      context.pushNamed('payment');
     }
   }
 
@@ -168,16 +169,9 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
               showPrintLabel: true,
             ),
             SizedBox(height: 20 * ratio),
-            CustomButton(
-              text: 'Next',
-              onTap: _goToNextStep,
-            ),
+            CustomButton(text: 'Next', onTap: _goToNextStep),
             SizedBox(height: 12 * ratio),
-            CustomButton(
-              text: 'Back',
-              isFilled: false,
-              onTap: _goBack,
-            ),
+            CustomButton(text: 'Back', isFilled: false, onTap: _goBack),
             SizedBox(height: 40 * ratio),
           ],
         ),
@@ -277,16 +271,9 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
               ],
             ),
             SizedBox(height: 20 * ratio),
-            CustomButton(
-              text: 'Next',
-              onTap: _goToNextStep,
-            ),
+            CustomButton(text: 'Next', onTap: _goToNextStep),
             SizedBox(height: 12 * ratio),
-            CustomButton(
-              text: 'Back',
-              isFilled: false,
-              onTap: _goBack,
-            ),
+            CustomButton(text: 'Back', isFilled: false, onTap: _goBack),
             SizedBox(height: 40 * ratio),
           ],
         ),
@@ -312,11 +299,7 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
               ),
             ),
             SizedBox(height: 16 * ratio),
-            CustomDropdown(
-              label: '',
-              hint: 'Full name/Company',
-              onTap: () {},
-            ),
+            CustomDropdown(label: '', hint: 'Full name/Company', onTap: () {}),
             SizedBox(height: 12 * ratio),
             const CustomTextField2(title: '', hintText: 'Last name'),
             SizedBox(height: 12 * ratio),
@@ -387,16 +370,9 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
               ],
             ),
             SizedBox(height: 20 * ratio),
-            CustomButton(
-              text: 'Next',
-              onTap: _goToNextStep,
-            ),
+            CustomButton(text: 'Next', onTap: _goToNextStep),
             SizedBox(height: 12 * ratio),
-            CustomButton(
-              text: 'Back',
-              isFilled: false,
-              onTap: _goBack,
-            ),
+            CustomButton(text: 'Back', isFilled: false, onTap: _goBack),
             SizedBox(height: 40 * ratio),
           ],
         ),
@@ -425,11 +401,15 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
             SizedBox(height: 12 * ratio),
             _buildDetailText('From', ratio),
             _buildValueText(
-                'United States, 07096, New Jersey, Port Reading', ratio),
+              'United States, 07096, New Jersey, Port Reading',
+              ratio,
+            ),
             SizedBox(height: 8 * ratio),
             _buildDetailText('To', ratio),
             _buildValueText(
-                'United States, 19133, Pen, Pennyhania, Philadelphia', ratio),
+              'United States, 19133, Pen, Pennyhania, Philadelphia',
+              ratio,
+            ),
             SizedBox(height: 8 * ratio),
             _buildDetailText('Weight', ratio),
             _buildValueText('15 lb', ratio),
@@ -459,8 +439,9 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
             SizedBox(height: 8 * ratio),
             _buildDetailText('Pick up details', ratio),
             _buildValueText(
-                'Port Reading,  Markley Street, EGO, New Jersey, United States',
-                ratio),
+              'Port Reading,  Markley Street, EGO, New Jersey, United States',
+              ratio,
+            ),
             SizedBox(height: 24 * ratio),
 
             // Receiver
@@ -484,8 +465,9 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
             SizedBox(height: 8 * ratio),
             _buildDetailText('Pick up details', ratio),
             _buildValueText(
-                'Port Reading,  Markley Street, EGO, New Jersey, United States',
-                ratio),
+              'Port Reading,  Markley Street, EGO, New Jersey, United States',
+              ratio,
+            ),
             SizedBox(height: 24 * ratio),
 
             // Promo code
@@ -507,15 +489,9 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
               ),
             ),
             SizedBox(height: 12 * ratio),
-            const CustomTextField2(
-              title: '',
-              hintText: '',
-            ),
+            const CustomTextField2(title: '', hintText: ''),
             SizedBox(height: 12 * ratio),
-            CustomButton(
-              text: 'Apply',
-              onTap: () {},
-            ),
+            CustomButton(text: 'Apply', onTap: () {}),
             SizedBox(height: 24 * ratio),
 
             // Insurance
@@ -604,16 +580,9 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
               ],
             ),
             SizedBox(height: 24 * ratio),
-            CustomButton(
-              text: _getNextButtonText(),
-              onTap: _goToNextStep,
-            ),
+            CustomButton(text: _getNextButtonText(), onTap: _goToNextStep),
             SizedBox(height: 12 * ratio),
-            CustomButton(
-              text: 'Back',
-              isFilled: false,
-              onTap: _goBack,
-            ),
+            CustomButton(text: 'Back', isFilled: false, onTap: _goBack),
             SizedBox(height: 40 * ratio),
           ],
         ),
