@@ -32,7 +32,7 @@ class _LCLPageState extends State<LCLPage> {
           },
         ),
         title: const Text(
-          'FCL Shipping',
+          'LCL Shipping',
           style: TextStyle(
             color: Colors.black,
             fontSize: 17,

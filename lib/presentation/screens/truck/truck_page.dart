@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
+import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/presentation/screens/home/components/tracking_card.dart';
+import 'package:yuu_sell/presentation/screens/truck/components/truck_status_sheet.dart';
 import 'package:yuu_sell/presentation/widgets/custom_button.dart';
 import 'package:yuu_sell/presentation/widgets/search_bar_widget.dart';
 
@@ -23,9 +25,7 @@ class TruckPage extends StatelessWidget {
               placeholderBuilder: (context) => Shimmer.fromColors(
                 baseColor: Colors.grey.shade300,
                 highlightColor: Colors.grey.shade100,
-                child: Container(
-                  color: Colors.white,
-                ),
+                child: Container(color: Colors.white),
               ),
             ),
             Positioned(
@@ -54,6 +54,18 @@ class TruckPage extends StatelessWidget {
               ),
             ),
             Positioned(
+              bottom: 230 * ratio,
+              right: 16,
+              child: GestureDetector(
+                onTap: () => _showTruckStatus(context),
+                child: CircleAvatar(
+                  radius: 27,
+                  backgroundColor: AppColors.white,
+                  child: Icon(Icons.history_sharp, size: 36),
+                ),
+              ),
+            ),
+            Positioned(
               bottom: 60 * ratio,
               left: 16 * ratio,
               right: 16 * ratio,
@@ -68,6 +80,15 @@ class TruckPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void _showTruckStatus(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const TruckStatusSheet(),
     );
   }
 }

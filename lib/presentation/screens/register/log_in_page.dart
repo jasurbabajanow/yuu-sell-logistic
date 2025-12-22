@@ -8,16 +8,15 @@ import 'package:yuu_sell/core/theme/app_font_styles.dart';
 import 'package:yuu_sell/presentation/screens/register/components/forgot_button_with_icon.dart';
 import 'package:yuu_sell/presentation/widgets/custom_button.dart';
 import 'package:yuu_sell/presentation/widgets/custom_text_field.dart';
-import 'package:yuu_sell/presentation/screens/register/components/phone_number_input.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class LogInPage extends StatefulWidget {
+  const LogInPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<LogInPage> createState() => _LogInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _LogInPageState extends State<LogInPage> {
   @override
   Widget build(BuildContext context) {
     final ratio = AppSizes.ratio(context);
@@ -34,7 +33,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           child: Column(
             children: [
-              SizedBox(height: 80 * ratio),
+              SizedBox(height: 150 * ratio),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -43,7 +42,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   SvgPicture.asset('assets/icons/logo-text.svg'),
                 ],
               ),
-              SizedBox(height: 48 * ratio),
+              SizedBox(height: 158 * ratio),
               Expanded(
                 child: Container(
                   height: double.infinity * ratio,
@@ -60,10 +59,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       children: [
                         Row(),
                         SizedBox(height: 18 * ratio),
-                        Text("Sign up", style: AppFontStyles.s24w600(ratio)),
+                        Text("Log in", style: AppFontStyles.s24w600(ratio)),
                         SizedBox(height: 30 * ratio),
-                        PhoneNumberInput(),
-                        SizedBox(height: 18 * ratio),
                         CustomTextField(
                           title: 'Email Address',
                           hintText: 'example@gmail.com',
@@ -75,23 +72,21 @@ class _SignUpPageState extends State<SignUpPage> {
                           hintText: '********',
                         ),
                         SizedBox(height: 18 * ratio),
-                        CustomTextField(
-                          title: 'Password',
-                          obscure: true,
-                          hintText: '********',
-                        ),
+
                         ForgotButtonWithIcon(),
                         SizedBox(height: 22 * ratio),
                         CustomButton(
+                          text: 'Log in',
                           onTap: () {
-                            context.push(AppRoutes.otp);
+                            context.go(AppRoutes.home);
                           },
                         ),
                         SizedBox(height: 12 * ratio),
                         CustomButton(
                           isFilled: false,
+                          text: 'Sign up',
                           onTap: () {
-                            context.go(AppRoutes.login);
+                            context.go(AppRoutes.signUp);
                           },
                         ),
                         SizedBox(height: 30 * ratio),

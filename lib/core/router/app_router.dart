@@ -13,10 +13,12 @@ import 'package:yuu_sell/presentation/screens/car_cargo/sub_pages/warning_page.d
 import 'package:yuu_sell/presentation/screens/home/home_page.dart';
 import 'package:yuu_sell/presentation/screens/messages/messages_page.dart';
 import 'package:yuu_sell/presentation/screens/profile/profile_page.dart';
+import 'package:yuu_sell/presentation/screens/register/log_in_page.dart';
 import 'package:yuu_sell/presentation/screens/register/otp_page.dart';
 import 'package:yuu_sell/presentation/screens/register/sign_up_page.dart';
 import 'package:yuu_sell/presentation/screens/register/splash_screen.dart';
 import 'package:yuu_sell/presentation/screens/sea_cargo/sea_cargo_page.dart';
+import 'package:yuu_sell/presentation/screens/truck/truck_details_page.dart';
 import 'package:yuu_sell/presentation/screens/truck/truck_page.dart';
 
 /// Route paths
@@ -49,6 +51,9 @@ class AppRoutes {
   static const String auction = 'auction';
   static const String personal = 'personal';
   static const String carCargoWarning = 'warning';
+
+  // Truck page sub-routes
+  static const String truckDetails = 'truckDetails';
 }
 
 /// GoRouter configuration
@@ -67,12 +72,12 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.signUp,
       name: 'signUp',
-      builder: (context, state) => const SignUpPage(signUp: true),
+      builder: (context, state) => const SignUpPage(),
     ),
     GoRoute(
       path: AppRoutes.login,
       name: 'login',
-      builder: (context, state) => const SignUpPage(signUp: false),
+      builder: (context, state) => const LogInPage(),
     ),
     GoRoute(
       path: AppRoutes.otp,
@@ -170,6 +175,13 @@ final GoRouter appRouter = GoRouter(
               path: AppRoutes.truck,
               name: 'truck',
               builder: (context, state) => const TruckPage(),
+              routes: [
+                GoRoute(
+                  path: AppRoutes.truckDetails,
+                  name: 'truckDetails',
+                  builder: (context, state) => const TruckDetailsPage(),
+                ),
+              ],
             ),
           ],
         ),
