@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
+import 'package:yuu_sell/core/router/app_router.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/presentation/screens/calculate/components/custom_dropdown.dart';
 import 'package:yuu_sell/presentation/screens/create_parcel/create_parcel_main_page.dart';
@@ -112,7 +114,11 @@ class _DeliveryCalculatePageState extends State<DeliveryCalculatePage> {
                   CustomButton(
                     text: 'NEXT',
                     onTap: () {
-                      // TODO: Navigate to next step
+                      if (selectedTabIndex == 1) {
+                        context.pushNamed(AppRoutes.deliveryCalculateSub2);
+                      } else {
+                        context.pushNamed(AppRoutes.deliveryCalculateSub1);
+                      }
                     },
                   ),
                   SizedBox(height: 12 * ratio),

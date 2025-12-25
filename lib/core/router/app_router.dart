@@ -6,6 +6,8 @@ import 'package:yuu_sell/presentation/screens/air_cargo/econom_page.dart';
 import 'package:yuu_sell/presentation/screens/air_cargo/express_page.dart';
 import 'package:yuu_sell/presentation/screens/air_cargo/payment_method_page.dart';
 import 'package:yuu_sell/presentation/screens/calculate/delivery_calculate_page.dart';
+import 'package:yuu_sell/presentation/screens/calculate/delivery_calculate_sub_page_1.dart';
+import 'package:yuu_sell/presentation/screens/calculate/delivery_calculate_sub_page_2.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/car_cargo_page.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/sub_pages/auction_page.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/sub_pages/personal_page.dart';
@@ -38,6 +40,8 @@ class AppRoutes {
 
   // Nested routes (keep bottom nav visible)
   static const String deliveryCalculate = 'delivery-calculate';
+  static const String deliveryCalculateSub1 = 'delivery-calculate-1';
+  static const String deliveryCalculateSub2 = 'delivery-calculate-2';
   static const String airCargo = 'air-cargo';
   static const String carCargo = 'car-cargo';
   static const String seaCargo = 'sea-cargo';
@@ -103,6 +107,20 @@ final GoRouter appRouter = GoRouter(
                   path: AppRoutes.deliveryCalculate,
                   name: 'deliveryCalculate',
                   builder: (context, state) => const DeliveryCalculatePage(),
+                  routes: [
+                    GoRoute(
+                      path: AppRoutes.deliveryCalculateSub1,
+                      name: 'delivery-calculate-1',
+                      builder: (context, state) =>
+                          const DeliveryCalculateSubPage1(),
+                    ),
+                    GoRoute(
+                      path: AppRoutes.deliveryCalculateSub1,
+                      name: 'delivery-calculate-2',
+                      builder: (context, state) =>
+                          const DeliveryCalculateSubPage2(),
+                    ),
+                  ],
                 ),
                 GoRoute(
                   path: AppRoutes.airCargo,

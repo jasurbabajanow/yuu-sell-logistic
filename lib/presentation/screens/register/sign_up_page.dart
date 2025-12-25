@@ -32,7 +32,8 @@ class _SignUpPageState extends State<SignUpPage> {
               colors: [AppColors.mainLight, AppColors.mainDark],
             ),
           ),
-          child: Column(
+          child: ListView(
+            padding: EdgeInsets.zero,
             children: [
               SizedBox(height: 80 * ratio),
               Row(
@@ -44,117 +45,112 @@ class _SignUpPageState extends State<SignUpPage> {
                 ],
               ),
               SizedBox(height: 48 * ratio),
-              Expanded(
-                child: Container(
-                  height: double.infinity * ratio,
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30 * ratio),
-                      topRight: Radius.circular(30 * ratio),
-                    ),
+              Container(
+                constraints: BoxConstraints(
+                  minHeight: MediaQuery.of(context).size.height - (128 * ratio),
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30 * ratio),
+                    topRight: Radius.circular(30 * ratio),
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24 * ratio),
-                    child: Column(
-                      children: [
-                        Row(),
-                        SizedBox(height: 18 * ratio),
-                        Text("Sign up", style: AppFontStyles.s24w600(ratio)),
-                        SizedBox(height: 30 * ratio),
-                        PhoneNumberInput(),
-                        SizedBox(height: 18 * ratio),
-                        CustomTextField(
-                          title: 'Email Address',
-                          hintText: 'example@gmail.com',
-                        ),
-                        SizedBox(height: 18 * ratio),
-                        CustomTextField(
-                          title: 'Password',
-                          obscure: true,
-                          hintText: '********',
-                        ),
-                        SizedBox(height: 18 * ratio),
-                        CustomTextField(
-                          title: 'Password',
-                          obscure: true,
-                          hintText: '********',
-                        ),
-                        ForgotButtonWithIcon(),
-                        SizedBox(height: 22 * ratio),
-                        CustomButton(
-                          onTap: () {
-                            context.push(AppRoutes.otp);
-                          },
-                        ),
-                        SizedBox(height: 12 * ratio),
-                        CustomButton(
-                          isFilled: false,
-                          onTap: () {
-                            context.go(AppRoutes.login);
-                          },
-                        ),
-                        SizedBox(height: 30 * ratio),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                height: 46 * ratio,
-                                decoration: BoxDecoration(
-                                  border: Border.all(),
-                                  borderRadius: BorderRadius.circular(
-                                    10 * ratio,
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          right: 4 * ratio,
-                                        ),
-                                        child: SvgPicture.asset(
-                                          'assets/icons/google.svg',
-                                        ),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24 * ratio),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 18 * ratio),
+                      Text("Sign up", style: AppFontStyles.s24w600(ratio)),
+                      SizedBox(height: 30 * ratio),
+                      PhoneNumberInput(),
+                      SizedBox(height: 18 * ratio),
+                      CustomTextField(
+                        title: 'Email Address',
+                        hintText: 'example@gmail.com',
+                      ),
+                      SizedBox(height: 18 * ratio),
+                      CustomTextField(
+                        title: 'Password',
+                        obscure: true,
+                        hintText: '********',
+                      ),
+                      SizedBox(height: 18 * ratio),
+                      CustomTextField(
+                        title: 'Password',
+                        obscure: true,
+                        hintText: '********',
+                      ),
+                      ForgotButtonWithIcon(),
+                      SizedBox(height: 22 * ratio),
+                      CustomButton(
+                        onTap: () {
+                          context.push(AppRoutes.otp);
+                        },
+                      ),
+                      SizedBox(height: 12 * ratio),
+                      CustomButton(
+                        isFilled: false,
+                        onTap: () {
+                          context.go(AppRoutes.login);
+                        },
+                      ),
+                      SizedBox(height: 30 * ratio),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 46 * ratio,
+                              decoration: BoxDecoration(
+                                border: Border.all(),
+                                borderRadius: BorderRadius.circular(10 * ratio),
+                              ),
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        right: 4 * ratio,
                                       ),
-                                      Text(
-                                        'Google',
-                                        style: AppFontStyles.s16w500(ratio),
+                                      child: SvgPicture.asset(
+                                        'assets/icons/google.svg',
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                    Text(
+                                      'Google',
+                                      style: AppFontStyles.s16w500(ratio),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            SizedBox(width: 14 * ratio),
-                            Expanded(
-                              child: Container(
-                                height: 46 * ratio,
-                                decoration: BoxDecoration(
-                                  border: Border.all(),
-                                  borderRadius: BorderRadius.circular(
-                                    10 * ratio,
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.apple),
-                                      Text(
-                                        'Apple',
-                                        style: AppFontStyles.s16w500(ratio),
-                                      ),
-                                    ],
-                                  ),
+                          ),
+                          SizedBox(width: 14 * ratio),
+                          Expanded(
+                            child: Container(
+                              height: 46 * ratio,
+                              decoration: BoxDecoration(
+                                border: Border.all(),
+                                borderRadius: BorderRadius.circular(10 * ratio),
+                              ),
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.apple),
+                                    Text(
+                                      'Apple',
+                                      style: AppFontStyles.s16w500(ratio),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
