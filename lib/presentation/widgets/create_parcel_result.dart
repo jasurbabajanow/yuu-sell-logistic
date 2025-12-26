@@ -88,6 +88,13 @@ class CreateParcelResult extends StatelessWidget {
               text: "Download PDF",
             ),
           ),
+          SizedBox(height: 60 * ratio),
+          Image.asset('assets/images/qr.png'),
+          SizedBox(height: 32 * ratio),
+          Text(
+            'QR Code for detailed information',
+            style: AppFontStyles.s14w500(ratio),
+          ),
         ],
       ),
     );
