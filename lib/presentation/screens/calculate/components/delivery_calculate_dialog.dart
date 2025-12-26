@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';
-import 'package:yuu_sell/presentation/screens/create_parcel/create_parcel_main_page.dart';
 import 'package:yuu_sell/presentation/widgets/custom_button.dart';
 
 class DeliveryCalculatorDialog extends StatelessWidget {

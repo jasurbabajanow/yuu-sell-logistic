@@ -1,10 +1,13 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/widgets/calendar_widget.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/widgets/deliver_info_widget.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/widgets/most_have_document_sheet.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/widgets/payment_sheet_widget.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/widgets/plain_bottom_sheet.dart';
+import 'package:yuu_sell/presentation/widgets/custom_country_picker.dart';
 import 'package:yuu_sell/presentation/widgets/custom_dropdown_jjj.dart';
 
 class AuctionPage extends StatefulWidget {
@@ -22,6 +25,18 @@ class _AuctionPageState extends State<AuctionPage> {
   String? selectedDocuments;
   String? selectedPickupDate;
   String? selectedToDate;
+  Country selected = Country(
+    phoneCode: "2",
+    countryCode: "CN",
+    e164Sc: 1,
+    geographic: true,
+    level: 1,
+    name: "China",
+    example: "1234567890",
+    displayName: "China",
+    displayNameNoCountryCode: "China",
+    e164Key: "1",
+  );
   int insuranceValue = 10;
 
   @override
@@ -69,10 +84,10 @@ class _AuctionPageState extends State<AuctionPage> {
               ),
               SizedBox(height: 15 * ratio),
               // Pick up from
-              CustomDropdown2(
-                label: 'Country',
-                hint: 'USA',
-                onTap: () => _showCountrySheet(context),
+              CustomCountryPicker(
+                flagEmoji: selected.flagEmoji,
+                countryName: selected.name,
+                onTap: () => _showCountryPicker(context),
               ),
               SizedBox(height: 15 * ratio),
 
@@ -140,7 +155,11 @@ class _AuctionPageState extends State<AuctionPage> {
               SizedBox(height: 16 * ratio),
 
               // Most have documents
-              CustomDropdown2(label: 'Most have documents', hint: 'Drop here'),
+              CustomDropdown2(
+                label: 'Most have documents',
+                hint: 'Drop here',
+                onTap: () => _showMostHaveDocumentsSheet(context),
+              ),
               SizedBox(height: 15 * ratio),
 
               // Date of pick up
@@ -231,15 +250,15 @@ class _AuctionPageState extends State<AuctionPage> {
     );
   }
 
-  void _showCountrySheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) =>
-          PlainBottomSheet(items: ['USA', 'ITALY', 'RUSSIA', 'UKRAINE', 'UAE']),
-    );
-  }
+  // void _showCountrySheet(BuildContext context) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     isScrollControlled: true,
+  //     backgroundColor: Colors.transparent,
+  //     builder: (context) =>
+  //         PlainBottomSheet(items: ['USA', 'ITALY', 'RUSSIA', 'UKRAINE', 'UAE']),
+  //   );
+  // }
 
   void _showStateSheet(BuildContext context) {
     showModalBottomSheet(
@@ -296,6 +315,50 @@ class _AuctionPageState extends State<AuctionPage> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => const PaymentSheetWidget(),
+    );
+  }
+
+  void _showMostHaveDocumentsSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const MostHaveDocumentsSheetWidget(),
+    );
+  }
+
+  void _showCountryPicker(BuildContext context) {
+    showCountryPicker(
+      favorite: ['TM', 'UZ', 'RU', 'CN'],
+      context: context,
+      countryListTheme: CountryListThemeData(
+        flagSize: 25,
+        backgroundColor: Colors.white,
+        textStyle: TextStyle(fontSize: 16, color: Colors.blueGrey),
+        bottomSheetHeight: 500, // Optional. Country list modal height
+        //Optional. Sets the border radius for the bottomsheet.
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        //Optional. Styles the search field.
+        inputDecoration: InputDecoration(
+          labelText: 'Search',
+          hintText: 'Start typing to search',
+          prefixIcon: const Icon(Icons.search),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(
+              color: const Color(0xFF8C98A8).withOpacity(0.2),
+            ),
+          ),
+        ),
+      ),
+      onSelect: (Country country) {
+        setState(() {
+          selected = country;
+        });
+      },
     );
   }
 }

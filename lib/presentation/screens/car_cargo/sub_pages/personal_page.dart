@@ -4,6 +4,7 @@ import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/widgets/calendar_widget.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/widgets/car_information_widget.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/widgets/deliver_info_widget.dart';
+import 'package:yuu_sell/presentation/screens/car_cargo/widgets/most_have_document_sheet.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/widgets/payment_sheet_widget.dart';
 import 'package:yuu_sell/presentation/screens/car_cargo/widgets/shipper_information_widget.dart';
 import 'package:yuu_sell/presentation/widgets/custom_dropdown_jjj.dart';
@@ -120,7 +121,11 @@ class _PersonalPageState extends State<PersonalPage> {
               SizedBox(height: 16 * ratio),
 
               // Most have documents
-              CustomDropdown2(label: 'Most have documents', hint: 'Drop here'),
+              CustomDropdown2(
+                label: 'Most have documents',
+                hint: 'Drop here',
+                onTap: () => _showMostHaveDocumentsSheet(context),
+              ),
               SizedBox(height: 15 * ratio),
 
               // Date of pick up
@@ -235,6 +240,15 @@ class _PersonalPageState extends State<PersonalPage> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => const PaymentSheetWidget(),
+    );
+  }
+
+  void _showMostHaveDocumentsSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const MostHaveDocumentsSheetWidget(),
     );
   }
 }
