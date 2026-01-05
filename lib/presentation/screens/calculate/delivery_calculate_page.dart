@@ -1,3 +1,4 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
@@ -6,6 +7,7 @@ import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/presentation/screens/calculate/components/custom_dropdown.dart';
 import 'package:yuu_sell/presentation/screens/create_parcel/create_parcel_main_page.dart';
 import 'package:yuu_sell/presentation/widgets/custom_button.dart';
+import 'package:yuu_sell/presentation/widgets/custom_country_picker.dart';
 
 class DeliveryCalculatePage extends StatefulWidget {
   const DeliveryCalculatePage({super.key});
@@ -16,6 +18,31 @@ class DeliveryCalculatePage extends StatefulWidget {
 
 class _DeliveryCalculatePageState extends State<DeliveryCalculatePage> {
   int selectedTabIndex = 1; // 0 = From yours country, 1 = In my country
+
+  Country selected1 = Country(
+    phoneCode: "2",
+    countryCode: "CN",
+    e164Sc: 1,
+    geographic: true,
+    level: 1,
+    name: "China",
+    example: "1234567890",
+    displayName: "China",
+    displayNameNoCountryCode: "China",
+    e164Key: "1",
+  );
+  Country selected2 = Country(
+    phoneCode: "1",
+    countryCode: "US",
+    e164Sc: 1,
+    geographic: true,
+    level: 1,
+    name: "United States",
+    example: "1234567890",
+    displayName: "United States",
+    displayNameNoCountryCode: "United States",
+    e164Key: "1",
+  );
 
   // Country/City selections
   String selectedFromCountry = 'United States';
@@ -69,24 +96,16 @@ class _DeliveryCalculatePageState extends State<DeliveryCalculatePage> {
                 children: [
                   if (selectedTabIndex == 1) ...[
                     // In my country - Country selection
-                    CustomDropdown(
-                      label: 'From',
-                      hint: selectedFromCountry,
-                      showFlag: true,
-                      flagEmoji: '🇺🇸',
-                      onTap: () {
-                        // TODO: Show country picker
-                      },
+                    CustomCountryPicker(
+                      flagEmoji: selected1.flagEmoji,
+                      countryName: selected1.name,
+                      onTap: () => _showCountryPicker1(context),
                     ),
                     SizedBox(height: 20 * ratio),
-                    CustomDropdown(
-                      label: 'To',
-                      hint: selectedToCountry,
-                      showFlag: true,
-                      flagEmoji: '🇨🇳',
-                      onTap: () {
-                        // TODO: Show country picker
-                      },
+                    CustomCountryPicker(
+                      flagEmoji: selected2.flagEmoji,
+                      countryName: selected2.name,
+                      onTap: () => _showCountryPicker2(context),
                     ),
                   ] else ...[
                     // From yours country - City selection
@@ -172,6 +191,76 @@ class _DeliveryCalculatePageState extends State<DeliveryCalculatePage> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showCountryPicker1(BuildContext context) {
+    showCountryPicker(
+      favorite: ['TM', 'UZ', 'RU', 'CN'],
+      context: context,
+      countryListTheme: CountryListThemeData(
+        flagSize: 25,
+        backgroundColor: Colors.white,
+        textStyle: TextStyle(fontSize: 16, color: Colors.blueGrey),
+        bottomSheetHeight: 500, // Optional. Country list modal height
+        //Optional. Sets the border radius for the bottomsheet.
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        //Optional. Styles the search field.
+        inputDecoration: InputDecoration(
+          labelText: 'Search',
+          hintText: 'Start typing to search',
+          prefixIcon: const Icon(Icons.search),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(
+              color: const Color(0xFF8C98A8).withOpacity(0.2),
+            ),
+          ),
+        ),
+      ),
+      onSelect: (Country country) {
+        setState(() {
+          selected1 = country;
+        });
+      },
+    );
+  }
+
+  void _showCountryPicker2(BuildContext context) {
+    showCountryPicker(
+      favorite: ['TM', 'UZ', 'RU', 'CN'],
+      context: context,
+      countryListTheme: CountryListThemeData(
+        flagSize: 25,
+        backgroundColor: Colors.white,
+        textStyle: TextStyle(fontSize: 16, color: Colors.blueGrey),
+        bottomSheetHeight: 500, // Optional. Country list modal height
+        //Optional. Sets the border radius for the bottomsheet.
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        //Optional. Styles the search field.
+        inputDecoration: InputDecoration(
+          labelText: 'Search',
+          hintText: 'Start typing to search',
+          prefixIcon: const Icon(Icons.search),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(
+              color: const Color(0xFF8C98A8).withOpacity(0.2),
+            ),
+          ),
+        ),
+      ),
+      onSelect: (Country country) {
+        setState(() {
+          selected2 = country;
+        });
+      },
     );
   }
 }

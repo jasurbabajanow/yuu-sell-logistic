@@ -1,13 +1,33 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';
 import 'package:yuu_sell/presentation/widgets/create_parcel_result.dart';
 import 'package:yuu_sell/presentation/widgets/custom_button.dart';
+import 'package:yuu_sell/presentation/widgets/custom_country_picker.dart';
 import 'package:yuu_sell/presentation/widgets/flexible_text_field.dart';
 
-class YuuSellPayment extends StatelessWidget {
+class YuuSellPayment extends StatefulWidget {
   const YuuSellPayment({super.key});
+
+  @override
+  State<YuuSellPayment> createState() => _YuuSellPaymentState();
+}
+
+class _YuuSellPaymentState extends State<YuuSellPayment> {
+  Country selected1 = Country(
+    phoneCode: "2",
+    countryCode: "CN",
+    e164Sc: 1,
+    geographic: true,
+    level: 1,
+    name: "China",
+    example: "1234567890",
+    displayName: "China",
+    displayNameNoCountryCode: "China",
+    e164Key: "1",
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +128,11 @@ class YuuSellPayment extends StatelessWidget {
               SizedBox(height: 10 * ratio),
               FlexibleTextField(hintText: 'Bussiness name'),
               SizedBox(height: 10 * ratio),
-              FlexibleTextField(hintText: 'China', isSuffix: true),
+              CustomCountryPicker(
+                flagEmoji: selected1.flagEmoji,
+                countryName: selected1.name,
+                onTap: () => _showCountryPicker1(context),
+              ),
               SizedBox(height: 10 * ratio),
               FlexibleTextField(hintText: '1234567891234'),
               SizedBox(height: 10 * ratio),
@@ -140,6 +164,41 @@ class YuuSellPayment extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _showCountryPicker1(BuildContext context) {
+    showCountryPicker(
+      favorite: ['TM', 'UZ', 'RU', 'CN'],
+      context: context,
+      countryListTheme: CountryListThemeData(
+        flagSize: 25,
+        backgroundColor: Colors.white,
+        textStyle: TextStyle(fontSize: 16, color: Colors.blueGrey),
+        bottomSheetHeight: 500, // Optional. Country list modal height
+        //Optional. Sets the border radius for the bottomsheet.
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        //Optional. Styles the search field.
+        inputDecoration: InputDecoration(
+          labelText: 'Search',
+          hintText: 'Start typing to search',
+          prefixIcon: const Icon(Icons.search),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(
+              color: const Color(0xFF8C98A8).withOpacity(0.2),
+            ),
+          ),
+        ),
+      ),
+      onSelect: (Country country) {
+        setState(() {
+          selected1 = country;
+        });
+      },
     );
   }
 }
