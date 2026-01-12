@@ -1,13 +1,44 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
-import 'package:yuu_sell/presentation/screens/calculate/components/custom_dropdown.dart';
 import 'package:yuu_sell/presentation/screens/create_parcel/create_parcel_steps_page.dart';
 import 'package:yuu_sell/presentation/widgets/custom_button.dart';
+import 'package:yuu_sell/presentation/widgets/custom_country_picker.dart';
 import 'package:yuu_sell/presentation/widgets/custom_text_field2.dart';
 
-class CreateParcelMainPage extends StatelessWidget {
+class CreateParcelMainPage extends StatefulWidget {
   const CreateParcelMainPage({super.key});
+
+  @override
+  State<CreateParcelMainPage> createState() => _CreateParcelMainPageState();
+}
+
+class _CreateParcelMainPageState extends State<CreateParcelMainPage> {
+  Country selected1 = Country(
+    phoneCode: "2",
+    countryCode: "CN",
+    e164Sc: 1,
+    geographic: true,
+    level: 1,
+    name: "China",
+    example: "1234567890",
+    displayName: "China",
+    displayNameNoCountryCode: "China",
+    e164Key: "1",
+  );
+  Country selected2 = Country(
+    phoneCode: "1",
+    countryCode: "US",
+    e164Sc: 1,
+    geographic: true,
+    level: 1,
+    name: "United States",
+    example: "1234567890",
+    displayName: "United States",
+    displayNameNoCountryCode: "United States",
+    e164Key: "1",
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -39,25 +70,20 @@ class CreateParcelMainPage extends StatelessWidget {
             children: [
               SizedBox(height: 20 * ratio),
               // From
-              CustomDropdown(
-                label: 'From',
-                hint: 'United States',
-                showFlag: true,
-                flagEmoji: '🇺🇸',
-                onTap: () {},
+              CustomCountryPicker(
+                flagEmoji: selected1.flagEmoji,
+                countryName: selected1.name,
+                onTap: () => _showCountryPicker1(context),
               ),
               SizedBox(height: 20 * ratio),
-              // ZIP code
               const CustomTextField2(title: 'ZIP code', hintText: '21002'),
               SizedBox(height: 20 * ratio),
-              // To
-              CustomDropdown(
-                label: 'To',
-                hint: 'China',
-                showFlag: true,
-                flagEmoji: '🇨🇳',
-                onTap: () {},
+              CustomCountryPicker(
+                flagEmoji: selected2.flagEmoji,
+                countryName: selected2.name,
+                onTap: () => _showCountryPicker2(context),
               ),
+              // To
               SizedBox(height: 24 * ratio),
               // Package dimensions
               Text(
@@ -134,6 +160,76 @@ class CreateParcelMainPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _showCountryPicker1(BuildContext context) {
+    showCountryPicker(
+      favorite: ['TM', 'UZ', 'RU', 'CN'],
+      context: context,
+      countryListTheme: CountryListThemeData(
+        flagSize: 25,
+        backgroundColor: Colors.white,
+        textStyle: TextStyle(fontSize: 16, color: Colors.blueGrey),
+        bottomSheetHeight: 500, // Optional. Country list modal height
+        //Optional. Sets the border radius for the bottomsheet.
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        //Optional. Styles the search field.
+        inputDecoration: InputDecoration(
+          labelText: 'Search',
+          hintText: 'Start typing to search',
+          prefixIcon: const Icon(Icons.search),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(
+              color: const Color(0xFF8C98A8).withOpacity(0.2),
+            ),
+          ),
+        ),
+      ),
+      onSelect: (Country country) {
+        setState(() {
+          selected1 = country;
+        });
+      },
+    );
+  }
+
+  void _showCountryPicker2(BuildContext context) {
+    showCountryPicker(
+      favorite: ['TM', 'UZ', 'RU', 'CN'],
+      context: context,
+      countryListTheme: CountryListThemeData(
+        flagSize: 25,
+        backgroundColor: Colors.white,
+        textStyle: TextStyle(fontSize: 16, color: Colors.blueGrey),
+        bottomSheetHeight: 500, // Optional. Country list modal height
+        //Optional. Sets the border radius for the bottomsheet.
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        //Optional. Styles the search field.
+        inputDecoration: InputDecoration(
+          labelText: 'Search',
+          hintText: 'Start typing to search',
+          prefixIcon: const Icon(Icons.search),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(
+              color: const Color(0xFF8C98A8).withOpacity(0.2),
+            ),
+          ),
+        ),
+      ),
+      onSelect: (Country country) {
+        setState(() {
+          selected2 = country;
+        });
+      },
     );
   }
 }
