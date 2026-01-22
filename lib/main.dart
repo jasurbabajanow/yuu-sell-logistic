@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:yuu_sell/core/di/injection_container.dart';
 import 'package:yuu_sell/core/router/app_router.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -11,13 +14,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Yuu Sell',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.main),
+    return MultiProvider(
+      providers: InjectionContainer.providers,
+      child: MaterialApp.router(
+        title: 'Yuu Sell',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.main),
+        ),
+        routerConfig: appRouter,
       ),
-      routerConfig: appRouter,
     );
   }
 }
