@@ -7,52 +7,48 @@ class CustomButton extends StatelessWidget {
   final bool isFilled;
   final Function()? onTap;
   final String? text;
+  final bool isLoading;
+
   const CustomButton({
     super.key,
     required this.onTap,
     this.isFilled = true,
     this.text,
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final ratio = AppSizes.ratio(context);
-    return GestureDetector(
-      onTap: onTap,
-      child: isFilled
-          ? Container(
-              decoration: BoxDecoration(
-                color: AppColors.main,
-                borderRadius: BorderRadius.circular(10 * ratio),
-              ),
-              height: 46 * ratio,
-              width: double.infinity,
-              child: Center(
-                child: Text(
-                  text ?? (isFilled ? 'Sign up' : 'Log in'),
-                  style: AppFontStyles.s16w600(
-                    ratio,
-                  ).copyWith(color: AppColors.white),
-                ),
-              ),
-            )
-          : Container(
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(10 * ratio),
-                border: Border.all(color: AppColors.main),
-              ),
-              height: 46 * ratio,
-              width: double.infinity,
-              child: Center(
-                child: Text(
-                  text ?? (isFilled ? 'Sign up' : 'Log in'),
-                  style: AppFontStyles.s16w600(ratio).copyWith(
-                    color: isFilled ? AppColors.white : AppColors.main,
-                  ),
-                ),
-              ),
+
+    Widget content = isLoading
+        ? SizedBox(
+            height: 20 * ratio,
+            width: 20 * ratio,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              color: isFilled ? AppColors.white : AppColors.main,
             ),
+          )
+        : Text(
+            text ?? (isFilled ? 'Sign up' : 'Log in'),
+            style: AppFontStyles.s16w600(ratio).copyWith(
+              color: isFilled ? AppColors.white : AppColors.main,
+            ),
+          );
+
+    return GestureDetector(
+      onTap: isLoading ? null : onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: isFilled ? AppColors.main : Colors.transparent,
+          borderRadius: BorderRadius.circular(10 * ratio),
+          border: isFilled ? null : Border.all(color: AppColors.main),
+        ),
+        height: 46 * ratio,
+        width: double.infinity,
+        child: Center(child: content),
+      ),
     );
   }
 }

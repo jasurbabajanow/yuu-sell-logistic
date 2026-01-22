@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/errors/result.dart';
+import '../../data/models/register_request.dart';
+import '../../data/models/login_request.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
 
@@ -19,12 +21,10 @@ class AuthProvider extends ChangeNotifier {
   AuthStatus _status = AuthStatus.initial;
   UserEntity? _user;
   String? _errorMessage;
-  String? _phone;
 
   AuthStatus get status => _status;
   UserEntity? get user => _user;
   String? get errorMessage => _errorMessage;
-  String? get phone => _phone;
   bool get isAuthenticated => _status == AuthStatus.authenticated;
   bool get isLoading => _status == AuthStatus.loading;
 
@@ -53,44 +53,25 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<bool> register({
+    required String email,
     required String phone,
-    required String name,
+    required String password,
+    String firstName = '',
+    String lastName = '',
+    String role = '',
   }) async {
     _setLoading();
 
-    final result = await _authRepository.register(
+    final request = RegisterRequest(
+      email: email,
       phone: phone,
-      name: name,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      role: role,
     );
 
-    return result.when(
-      success: (message) {
-        _phone = phone;
-        _status = AuthStatus.unauthenticated;
-        notifyListeners();
-        return true;
-      },
-      failure: (message, statusCode) {
-        _setError(message);
-        return false;
-      },
-    );
-  }
-
-  Future<bool> verifyOtp({
-    required String otp,
-  }) async {
-    if (_phone == null) {
-      _setError('Phone number not found. Please register again.');
-      return false;
-    }
-
-    _setLoading();
-
-    final result = await _authRepository.verifyOtp(
-      phone: _phone!,
-      otp: otp,
-    );
+    final result = await _authRepository.register(request);
 
     return result.when(
       success: (user) {
@@ -105,15 +86,17 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<bool> login({
-    required String phone,
+    required String emailOrPhone,
     required String password,
   }) async {
     _setLoading();
 
-    final result = await _authRepository.login(
-      phone: phone,
+    final request = LoginRequest(
+      emailOrPhone: emailOrPhone,
       password: password,
     );
+
+    final result = await _authRepository.login(request);
 
     return result.when(
       success: (user) {
@@ -136,7 +119,6 @@ class AuthProvider extends ChangeNotifier {
       success: (_) {
         _status = AuthStatus.unauthenticated;
         _user = null;
-        _phone = null;
         notifyListeners();
       },
       failure: (message, statusCode) {

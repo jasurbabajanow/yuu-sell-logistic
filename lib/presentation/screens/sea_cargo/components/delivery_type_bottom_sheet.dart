@@ -57,7 +57,7 @@ class _DeliveryTypeBottomSheetState extends State<DeliveryTypeBottomSheet> {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Color(0xff000000).withOpacity(0.05),
+              color: Color(0xff000000).withValues(alpha: 0.05),
               spreadRadius: 0,
               blurRadius: 14,
               offset: const Offset(0, 9),

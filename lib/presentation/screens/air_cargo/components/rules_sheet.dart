@@ -33,7 +33,7 @@ class RulesSheet extends StatelessWidget {
               borderRadius: BorderRadius.circular(20 * ratio),
               boxShadow: [
                 BoxShadow(
-                  color: Color(0xff000000).withOpacity(0.05),
+                  color: Color(0xff000000).withValues(alpha: 0.05),
                   blurRadius: 14,
                   spreadRadius: 0,
                   offset: Offset(0, 9),
@@ -81,7 +81,7 @@ class RulesSheet extends StatelessWidget {
               borderRadius: BorderRadius.circular(20 * ratio),
               boxShadow: [
                 BoxShadow(
-                  color: Color(0xff000000).withOpacity(0.05),
+                  color: Color(0xff000000).withValues(alpha: 0.05),
                   blurRadius: 14,
                   spreadRadius: 0,
                   offset: Offset(0, 9),
@@ -129,7 +129,7 @@ class RulesSheet extends StatelessWidget {
               borderRadius: BorderRadius.circular(20 * ratio),
               boxShadow: [
                 BoxShadow(
-                  color: Color(0xff000000).withOpacity(0.05),
+                  color: Color(0xff000000).withValues(alpha: 0.05),
                   blurRadius: 14,
                   spreadRadius: 0,
                   offset: Offset(0, 9),
@@ -177,7 +177,7 @@ class RulesSheet extends StatelessWidget {
               borderRadius: BorderRadius.circular(20 * ratio),
               boxShadow: [
                 BoxShadow(
-                  color: Color(0xff000000).withOpacity(0.05),
+                  color: Color(0xff000000).withValues(alpha: 0.05),
                   blurRadius: 14,
                   spreadRadius: 0,
                   offset: Offset(0, 9),
@@ -225,7 +225,7 @@ class RulesSheet extends StatelessWidget {
               borderRadius: BorderRadius.circular(20 * ratio),
               boxShadow: [
                 BoxShadow(
-                  color: Color(0xff000000).withOpacity(0.05),
+                  color: Color(0xff000000).withValues(alpha: 0.05),
                   blurRadius: 14,
                   spreadRadius: 0,
                   offset: Offset(0, 9),

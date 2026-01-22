@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/router/app_router.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 import 'package:yuu_sell/core/theme/app_font_styles.dart';
+import 'package:yuu_sell/presentation/providers/auth_provider.dart';
 import 'package:yuu_sell/presentation/screens/register/components/forgot_button_with_icon.dart';
 import 'package:yuu_sell/presentation/widgets/custom_button.dart';
 import 'package:yuu_sell/presentation/widgets/custom_text_field.dart';
@@ -17,9 +19,55 @@ class LogInPage extends StatefulWidget {
 }
 
 class _LogInPageState extends State<LogInPage> {
+  final _emailOrPhoneController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailOrPhoneController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleLogin() async {
+    if (_emailOrPhoneController.text.isEmpty) {
+      _showError('Please enter your email or phone number');
+      return;
+    }
+
+    if (_passwordController.text.isEmpty) {
+      _showError('Please enter your password');
+      return;
+    }
+
+    final authProvider = context.read<AuthProvider>();
+
+    final success = await authProvider.login(
+      emailOrPhone: _emailOrPhoneController.text.trim(),
+      password: _passwordController.text,
+    );
+
+    if (success && mounted) {
+      context.go(AppRoutes.home);
+    } else if (mounted && authProvider.errorMessage != null) {
+      _showError(authProvider.errorMessage!);
+    }
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final ratio = AppSizes.ratio(context);
+    final authProvider = context.watch<AuthProvider>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -62,24 +110,25 @@ class _LogInPageState extends State<LogInPage> {
                         Text("Log in", style: AppFontStyles.s24w600(ratio)),
                         SizedBox(height: 30 * ratio),
                         CustomTextField(
-                          title: 'Email Address',
+                          title: 'Email or Phone',
                           hintText: 'example@gmail.com',
+                          controller: _emailOrPhoneController,
+                          keyboardType: TextInputType.emailAddress,
                         ),
                         SizedBox(height: 18 * ratio),
                         CustomTextField(
                           title: 'Password',
                           obscure: true,
                           hintText: '********',
+                          controller: _passwordController,
                         ),
                         SizedBox(height: 18 * ratio),
-
                         ForgotButtonWithIcon(),
                         SizedBox(height: 22 * ratio),
                         CustomButton(
                           text: 'Log in',
-                          onTap: () {
-                            context.go(AppRoutes.home);
-                          },
+                          onTap: authProvider.isLoading ? null : _handleLogin,
+                          isLoading: authProvider.isLoading,
                         ),
                         SizedBox(height: 12 * ratio),
                         CustomButton(

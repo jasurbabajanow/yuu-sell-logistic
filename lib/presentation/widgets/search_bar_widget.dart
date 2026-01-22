@@ -21,7 +21,7 @@ class SearchBarWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10 * ratio),
         boxShadow: [
           BoxShadow(
-            color: Color(0xFF000000).withOpacity(0.08),
+            color: Color(0xFF000000).withValues(alpha: 0.08),
             spreadRadius: 0,
             blurRadius: 15,
             offset: const Offset(0, 4),

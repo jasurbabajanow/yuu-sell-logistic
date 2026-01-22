@@ -185,7 +185,7 @@ class _CreateParcelMainPageState extends State<CreateParcelMainPage> {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(
-              color: const Color(0xFF8C98A8).withOpacity(0.2),
+              color: const Color(0xFF8C98A8).withValues(alpha: 0.2),
             ),
           ),
         ),
@@ -220,7 +220,7 @@ class _CreateParcelMainPageState extends State<CreateParcelMainPage> {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(
-              color: const Color(0xFF8C98A8).withOpacity(0.2),
+              color: const Color(0xFF8C98A8).withValues(alpha: 0.2),
             ),
           ),
         ),

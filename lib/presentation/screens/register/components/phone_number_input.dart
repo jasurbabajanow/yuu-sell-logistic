@@ -3,7 +3,14 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 
 class PhoneNumberInput extends StatefulWidget {
-  const PhoneNumberInput({super.key});
+  final void Function(String phoneNumber)? onPhoneChanged;
+  final String initialCountryCode;
+
+  const PhoneNumberInput({
+    super.key,
+    this.onPhoneChanged,
+    this.initialCountryCode = 'US',
+  });
 
   @override
   State<PhoneNumberInput> createState() => _PhoneNumberInputState();
@@ -11,7 +18,13 @@ class PhoneNumberInput extends StatefulWidget {
 
 class _PhoneNumberInputState extends State<PhoneNumberInput> {
   final TextEditingController _controller = TextEditingController();
-  PhoneNumber _phoneNumber = PhoneNumber(isoCode: 'US');
+  late PhoneNumber _phoneNumber;
+
+  @override
+  void initState() {
+    super.initState();
+    _phoneNumber = PhoneNumber(isoCode: widget.initialCountryCode);
+  }
 
   @override
   void dispose() {
@@ -41,7 +54,7 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
             border: Border.all(color: AppColors.textFieldBorder, width: 1.5),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.02),
+                color: Colors.black.withValues(alpha: 0.02),
                 blurRadius: 2,
                 offset: const Offset(0, 1),
               ),
@@ -52,6 +65,7 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
               setState(() {
                 _phoneNumber = number;
               });
+              widget.onPhoneChanged?.call(number.phoneNumber ?? '');
             },
             selectorConfig: const SelectorConfig(
               selectorType: PhoneInputSelectorType.BOTTOM_SHEET,

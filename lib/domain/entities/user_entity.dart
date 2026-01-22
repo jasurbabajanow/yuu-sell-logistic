@@ -1,15 +1,19 @@
 class UserEntity {
   final String id;
-  final String name;
+  final String firstName;
+  final String lastName;
   final String phone;
-  final String? email;
-  final String? avatarUrl;
+  final String email;
+  final String role;
 
   const UserEntity({
     required this.id,
-    required this.name,
+    required this.firstName,
+    required this.lastName,
     required this.phone,
-    this.email,
-    this.avatarUrl,
+    required this.email,
+    required this.role,
   });
+
+  String get fullName => '$firstName $lastName'.trim();
 }

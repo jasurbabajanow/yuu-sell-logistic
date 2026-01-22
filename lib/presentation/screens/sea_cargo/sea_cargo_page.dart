@@ -94,7 +94,7 @@ class _SeaCargoPageState extends State<SeaCargoPage>
                           borderRadius: BorderRadius.circular(20 * ratio),
                           boxShadow: [
                             BoxShadow(
-                              color: Color(0xff000000).withOpacity(0.05),
+                              color: Color(0xff000000).withValues(alpha: 0.05),
                               blurRadius: 14 * ratio,
                               offset: Offset(0, 9 * ratio),
                             ),
@@ -136,7 +136,7 @@ class _SeaCargoPageState extends State<SeaCargoPage>
                           borderRadius: BorderRadius.circular(20 * ratio),
                           boxShadow: [
                             BoxShadow(
-                              color: Color(0xff000000).withOpacity(0.05),
+                              color: Color(0xff000000).withValues(alpha: 0.05),
                               blurRadius: 14 * ratio,
                               offset: Offset(0, 9 * ratio),
                             ),
@@ -173,7 +173,7 @@ class _SeaCargoPageState extends State<SeaCargoPage>
                         borderRadius: BorderRadius.circular(20 * ratio),
                         boxShadow: [
                           BoxShadow(
-                            color: Color(0xff000000).withOpacity(0.05),
+                            color: Color(0xff000000).withValues(alpha: 0.05),
                             blurRadius: 14 * ratio,
                             offset: Offset(0, 9 * ratio),
                           ),
@@ -209,7 +209,7 @@ class _SeaCargoPageState extends State<SeaCargoPage>
                         borderRadius: BorderRadius.circular(20 * ratio),
                         boxShadow: [
                           BoxShadow(
-                            color: Color(0xff000000).withOpacity(0.05),
+                            color: Color(0xff000000).withValues(alpha: 0.05),
                             blurRadius: 14 * ratio,
                             offset: Offset(0, 9 * ratio),
                           ),
@@ -244,7 +244,7 @@ class _SeaCargoPageState extends State<SeaCargoPage>
                         borderRadius: BorderRadius.circular(20 * ratio),
                         boxShadow: [
                           BoxShadow(
-                            color: Color(0xff000000).withOpacity(0.05),
+                            color: Color(0xff000000).withValues(alpha: 0.05),
                             blurRadius: 14 * ratio,
                             offset: Offset(0, 9 * ratio),
                           ),

@@ -165,7 +165,7 @@ class _DeliveryCalculateSubPage2State extends State<DeliveryCalculateSubPage2> {
                         builder: (context) => CreateParcelMainPage(),
                       ),
                     );
-                    print('Create parcel clicked');
+                    debugPrint('Create parcel clicked');
                   },
                 );
               },
