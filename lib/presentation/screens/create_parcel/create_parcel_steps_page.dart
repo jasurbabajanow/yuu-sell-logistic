@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:yuu_sell/core/constants/app_sizes.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
-import 'package:yuu_sell/presentation/screens/calculate/components/custom_dropdown.dart';
+import 'package:yuu_sell/data/models/order_item_model.dart';
+import 'package:yuu_sell/presentation/providers/auth_provider.dart';
+import 'package:yuu_sell/presentation/providers/create_parcel_provider.dart';
+import 'package:yuu_sell/presentation/providers/order_provider.dart';
 import 'package:yuu_sell/presentation/screens/create_parcel/components/delivery_service_card.dart';
 import 'package:yuu_sell/presentation/screens/create_parcel/components/step_progress_bar.dart';
 import 'package:yuu_sell/presentation/widgets/custom_button.dart';
@@ -16,26 +20,180 @@ class CreateParcelStepsPage extends StatefulWidget {
 }
 
 class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
-  int currentStep =
-      1; // 1 = Delivery options, 2 = Sender, 3 = Receiver, 4 = Summary
+  int currentStep = 1;
+
+  // Sender controllers
+  final _senderFirstNameController = TextEditingController();
+  final _senderLastNameController = TextEditingController();
+  final _senderEmailController = TextEditingController();
+  final _senderPhoneController = TextEditingController();
+  final _senderAddressController = TextEditingController();
+  final _senderCityController = TextEditingController();
+  final _senderStateController = TextEditingController();
+  final _senderZipCodeController = TextEditingController();
+
+  // Receiver controllers
+  final _receiverFirstNameController = TextEditingController();
+  final _receiverLastNameController = TextEditingController();
+  final _receiverEmailController = TextEditingController();
+  final _receiverPhoneController = TextEditingController();
+  final _receiverAddressController = TextEditingController();
+  final _receiverCityController = TextEditingController();
+  final _receiverStateController = TextEditingController();
+  final _receiverZipCodeController = TextEditingController();
+
+  // Promo code controller
+  final _promoCodeController = TextEditingController();
+
+  @override
+  void dispose() {
+    _senderFirstNameController.dispose();
+    _senderLastNameController.dispose();
+    _senderEmailController.dispose();
+    _senderPhoneController.dispose();
+    _senderAddressController.dispose();
+    _senderCityController.dispose();
+    _senderStateController.dispose();
+    _senderZipCodeController.dispose();
+    _receiverFirstNameController.dispose();
+    _receiverLastNameController.dispose();
+    _receiverEmailController.dispose();
+    _receiverPhoneController.dispose();
+    _receiverAddressController.dispose();
+    _receiverCityController.dispose();
+    _receiverStateController.dispose();
+    _receiverZipCodeController.dispose();
+    _promoCodeController.dispose();
+    super.dispose();
+  }
+
+  void _saveSenderInfo() {
+    final provider = context.read<CreateParcelProvider>();
+    provider.setSenderFirstName(_senderFirstNameController.text);
+    provider.setSenderLastName(_senderLastNameController.text);
+    provider.setSenderEmail(_senderEmailController.text);
+    provider.setSenderPhone(_senderPhoneController.text);
+    provider.setSenderAddress(_senderAddressController.text);
+    provider.setSenderCity(_senderCityController.text);
+    provider.setSenderState(_senderStateController.text);
+    provider.setSenderZipCode(_senderZipCodeController.text);
+  }
+
+  void _saveReceiverInfo() {
+    final provider = context.read<CreateParcelProvider>();
+    provider.setReceiverFirstName(_receiverFirstNameController.text);
+    provider.setReceiverLastName(_receiverLastNameController.text);
+    provider.setReceiverEmail(_receiverEmailController.text);
+    provider.setReceiverPhone(_receiverPhoneController.text);
+    provider.setReceiverAddress(_receiverAddressController.text);
+    provider.setReceiverCity(_receiverCityController.text);
+    provider.setReceiverState(_receiverStateController.text);
+    provider.setReceiverZipCode(_receiverZipCodeController.text);
+  }
 
   void _goToNextStep() {
+    if (currentStep == 2) {
+      _saveSenderInfo();
+    } else if (currentStep == 3) {
+      _saveReceiverInfo();
+    }
+
     if (currentStep < 4) {
       setState(() {
         currentStep++;
       });
     } else {
-      context.pushNamed('payment');
+      _submitOrder();
     }
   }
 
   void _goBack() {
+    if (currentStep == 2) {
+      _saveSenderInfo();
+    } else if (currentStep == 3) {
+      _saveReceiverInfo();
+    }
+
     if (currentStep > 1) {
       setState(() {
         currentStep--;
       });
     } else {
       Navigator.pop(context);
+    }
+  }
+
+  Future<void> _submitOrder() async {
+    final parcelProvider = context.read<CreateParcelProvider>();
+    final orderProvider = context.read<OrderProvider>();
+    final authProvider = context.read<AuthProvider>();
+
+    // Save promo code
+    parcelProvider.setPromoCode(_promoCodeController.text);
+
+    // Get client ID from auth provider (user ID)
+    final clientId = int.tryParse(authProvider.user?.id ?? '0') ?? 0;
+
+    // Create order item
+    final orderItem = OrderItemModel(
+      type: 'general',
+      description: 'Parcel shipment',
+      qty: 1,
+      weightKg: parcelProvider.weight * 0.453592, // Convert lb to kg
+      volumeM3: parcelProvider.volume,
+      lengthCm: parcelProvider.length * 2.54, // Convert in to cm
+      widthCm: parcelProvider.width * 2.54,
+      heightCm: parcelProvider.height * 2.54,
+    );
+
+    // Show loading indicator
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
+    // Submit order
+    final success = await orderProvider.createOrder(
+      items: [orderItem],
+      clientId: clientId,
+      originPoint: parcelProvider.originPoint,
+      destinationPoint: parcelProvider.destinationPoint,
+      cargoType: 'general',
+      weight: parcelProvider.weight * 0.453592, // Convert lb to kg
+      volume: parcelProvider.volume,
+      deliveryCost: parcelProvider.deliveryCost,
+    );
+
+    // Hide loading indicator
+    if (mounted) {
+      Navigator.pop(context);
+    }
+
+    if (success) {
+      // Reset form and navigate to payment/success
+      parcelProvider.reset();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Order created successfully!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        context.pushNamed('payment');
+      }
+    } else {
+      // Show error
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(orderProvider.errorMessage ?? 'Failed to create order'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 
@@ -55,7 +213,10 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
   }
 
   String _getNextButtonText() {
-    return currentStep == 4 ? 'Pay (14.50\$)' : 'Next';
+    final provider = context.watch<CreateParcelProvider>();
+    return currentStep == 4
+        ? 'Pay (${provider.deliveryCost.toStringAsFixed(2)}\$)'
+        : 'Next';
   }
 
   @override
@@ -83,13 +244,11 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
       ),
       body: Column(
         children: [
-          // Progress bar
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24 * ratio),
             child: StepProgressBar(currentStep: currentStep),
           ),
           SizedBox(height: 24 * ratio),
-          // Title with animation
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
             child: Text(
@@ -103,7 +262,6 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
             ),
           ),
           SizedBox(height: 20 * ratio),
-          // Content with animation
           Expanded(
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
@@ -132,6 +290,8 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
 
   // Step 1: Delivery options
   Widget _buildStep1Content(double ratio) {
+    final provider = context.watch<CreateParcelProvider>();
+
     return SingleChildScrollView(
       key: const ValueKey(1),
       child: Padding(
@@ -148,25 +308,49 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
               ),
             ),
             SizedBox(height: 16 * ratio),
-            const DeliveryServiceCard(
-              badgeText: 'Best price',
-              badgeColor: Colors.green,
-              price: '14.50\$',
-              deliveryTime: '1-4 days',
-              showPrintLabel: true,
+            GestureDetector(
+              onTap: () {
+                provider.setSelectedDeliveryOption(0);
+                provider.setDeliveryCost(14.50);
+                provider.setDeliveryTime('1-4 days');
+              },
+              child: DeliveryServiceCard(
+                badgeText: 'Best price',
+                badgeColor: Colors.green,
+                price: '14.50\$',
+                deliveryTime: '1-4 days',
+                showPrintLabel: true,
+                isSelected: provider.selectedDeliveryOption == 0,
+              ),
             ),
-            const DeliveryServiceCard(
-              badgeText: 'Fasted',
-              badgeColor: Colors.pink,
-              price: '14.50\$',
-              deliveryTime: '1-4 days',
+            GestureDetector(
+              onTap: () {
+                provider.setSelectedDeliveryOption(1);
+                provider.setDeliveryCost(24.50);
+                provider.setDeliveryTime('1-2 days');
+              },
+              child: DeliveryServiceCard(
+                badgeText: 'Fastest',
+                badgeColor: Colors.pink,
+                price: '24.50\$',
+                deliveryTime: '1-2 days',
+                isSelected: provider.selectedDeliveryOption == 1,
+              ),
             ),
-            const DeliveryServiceCard(
-              badgeText: 'Best price',
-              badgeColor: Colors.green,
-              price: '14.50\$',
-              deliveryTime: '1-4 days',
-              showPrintLabel: true,
+            GestureDetector(
+              onTap: () {
+                provider.setSelectedDeliveryOption(2);
+                provider.setDeliveryCost(19.50);
+                provider.setDeliveryTime('2-3 days');
+              },
+              child: DeliveryServiceCard(
+                badgeText: 'Standard',
+                badgeColor: Colors.blue,
+                price: '19.50\$',
+                deliveryTime: '2-3 days',
+                showPrintLabel: true,
+                isSelected: provider.selectedDeliveryOption == 2,
+              ),
             ),
             SizedBox(height: 20 * ratio),
             CustomButton(text: 'Next', onTap: _goToNextStep),
@@ -181,6 +365,8 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
 
   // Step 2: Sender information
   Widget _buildStep2Content(double ratio) {
+    final provider = context.watch<CreateParcelProvider>();
+
     return SingleChildScrollView(
       key: const ValueKey(2),
       child: Padding(
@@ -197,26 +383,56 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
               ),
             ),
             SizedBox(height: 16 * ratio),
-            const CustomTextField2(
+            CustomTextField2(
               title: '',
               hintText: 'Full name / Company name',
+              controller: _senderFirstNameController,
             ),
             SizedBox(height: 12 * ratio),
-            const CustomTextField2(title: '', hintText: 'Last name'),
+            CustomTextField2(
+              title: '',
+              hintText: 'Last name',
+              controller: _senderLastNameController,
+            ),
             SizedBox(height: 12 * ratio),
-            const CustomTextField2(title: '', hintText: 'email'),
+            CustomTextField2(
+              title: '',
+              hintText: 'Email',
+              controller: _senderEmailController,
+              keyboardType: TextInputType.emailAddress,
+            ),
             SizedBox(height: 12 * ratio),
-            const CustomTextField2(title: '', hintText: 'phone number'),
+            CustomTextField2(
+              title: '',
+              hintText: 'Phone number',
+              controller: _senderPhoneController,
+              keyboardType: TextInputType.phone,
+            ),
             SizedBox(height: 12 * ratio),
-            CustomDropdown(label: '', hint: 'Address', onTap: () {}),
+            CustomTextField2(
+              title: '',
+              hintText: 'Address',
+              controller: _senderAddressController,
+            ),
             SizedBox(height: 12 * ratio),
-            const CustomTextField2(title: '', hintText: 'City'),
+            CustomTextField2(
+              title: '',
+              hintText: 'City',
+              controller: _senderCityController,
+            ),
             SizedBox(height: 12 * ratio),
-            CustomDropdown(label: '', hint: 'State', onTap: () {}),
+            CustomTextField2(
+              title: '',
+              hintText: 'State',
+              controller: _senderStateController,
+            ),
             SizedBox(height: 12 * ratio),
-            const CustomTextField2(title: '', hintText: 'Zip code'),
+            CustomTextField2(
+              title: '',
+              hintText: 'Zip code',
+              controller: _senderZipCodeController,
+            ),
             SizedBox(height: 24 * ratio),
-            // Bottom info
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -231,7 +447,7 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
                 Row(
                   children: [
                     Text(
-                      '1-4 days',
+                      provider.deliveryTime,
                       style: TextStyle(
                         fontSize: 14 * ratio,
                         fontWeight: FontWeight.w400,
@@ -261,7 +477,7 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
                   ),
                 ),
                 Text(
-                  '14.50\$',
+                  '${provider.deliveryCost.toStringAsFixed(2)}\$',
                   style: TextStyle(
                     fontSize: 18 * ratio,
                     fontWeight: FontWeight.bold,
@@ -283,6 +499,8 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
 
   // Step 3: Receiver information
   Widget _buildStep3Content(double ratio) {
+    final provider = context.watch<CreateParcelProvider>();
+
     return SingleChildScrollView(
       key: const ValueKey(3),
       child: Padding(
@@ -299,23 +517,56 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
               ),
             ),
             SizedBox(height: 16 * ratio),
-            CustomDropdown(label: '', hint: 'Full name/Company', onTap: () {}),
+            CustomTextField2(
+              title: '',
+              hintText: 'Full name / Company name',
+              controller: _receiverFirstNameController,
+            ),
             SizedBox(height: 12 * ratio),
-            const CustomTextField2(title: '', hintText: 'Last name'),
+            CustomTextField2(
+              title: '',
+              hintText: 'Last name',
+              controller: _receiverLastNameController,
+            ),
             SizedBox(height: 12 * ratio),
-            const CustomTextField2(title: '', hintText: 'email'),
+            CustomTextField2(
+              title: '',
+              hintText: 'Email',
+              controller: _receiverEmailController,
+              keyboardType: TextInputType.emailAddress,
+            ),
             SizedBox(height: 12 * ratio),
-            const CustomTextField2(title: '', hintText: 'phone number'),
+            CustomTextField2(
+              title: '',
+              hintText: 'Phone number',
+              controller: _receiverPhoneController,
+              keyboardType: TextInputType.phone,
+            ),
             SizedBox(height: 12 * ratio),
-            CustomDropdown(label: '', hint: 'Address', onTap: () {}),
+            CustomTextField2(
+              title: '',
+              hintText: 'Address',
+              controller: _receiverAddressController,
+            ),
             SizedBox(height: 12 * ratio),
-            const CustomTextField2(title: '', hintText: 'City'),
+            CustomTextField2(
+              title: '',
+              hintText: 'City',
+              controller: _receiverCityController,
+            ),
             SizedBox(height: 12 * ratio),
-            CustomDropdown(label: '', hint: 'State', onTap: () {}),
+            CustomTextField2(
+              title: '',
+              hintText: 'State',
+              controller: _receiverStateController,
+            ),
             SizedBox(height: 12 * ratio),
-            const CustomTextField2(title: '', hintText: 'Zip code'),
+            CustomTextField2(
+              title: '',
+              hintText: 'Zip code',
+              controller: _receiverZipCodeController,
+            ),
             SizedBox(height: 24 * ratio),
-            // Bottom info
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -330,7 +581,7 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
                 Row(
                   children: [
                     Text(
-                      '1-4 days',
+                      provider.deliveryTime,
                       style: TextStyle(
                         fontSize: 14 * ratio,
                         fontWeight: FontWeight.w400,
@@ -360,7 +611,7 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
                   ),
                 ),
                 Text(
-                  '14.50\$',
+                  '${provider.deliveryCost.toStringAsFixed(2)}\$',
                   style: TextStyle(
                     fontSize: 18 * ratio,
                     fontWeight: FontWeight.bold,
@@ -382,6 +633,8 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
 
   // Step 4: Summary
   Widget _buildStep4Content(double ratio) {
+    final provider = context.watch<CreateParcelProvider>();
+
     return SingleChildScrollView(
       key: const ValueKey(4),
       child: Padding(
@@ -401,21 +654,21 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
             SizedBox(height: 12 * ratio),
             _buildDetailText('From', ratio),
             _buildValueText(
-              'United States, 07096, New Jersey, Port Reading',
+              '${provider.originCountry}, ${provider.originZipCode}, ${provider.senderCity}',
               ratio,
             ),
             SizedBox(height: 8 * ratio),
             _buildDetailText('To', ratio),
             _buildValueText(
-              'United States, 19133, Pen, Pennyhania, Philadelphia',
+              '${provider.destinationCountry}, ${provider.receiverZipCode}, ${provider.receiverCity}',
               ratio,
             ),
             SizedBox(height: 8 * ratio),
             _buildDetailText('Weight', ratio),
-            _buildValueText('15 lb', ratio),
+            _buildValueText('${provider.weight.toStringAsFixed(1)} lb', ratio),
             SizedBox(height: 8 * ratio),
             _buildDetailText('Dimensions', ratio),
-            _buildValueText('5 x 5 x 5 in', ratio),
+            _buildValueText(provider.dimensionsString, ratio),
             SizedBox(height: 24 * ratio),
 
             // Sender
@@ -429,19 +682,16 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
             ),
             SizedBox(height: 12 * ratio),
             _buildDetailText('Name', ratio),
-            _buildValueText('Victoria Smith', ratio),
+            _buildValueText(provider.senderFullName, ratio),
             SizedBox(height: 8 * ratio),
             _buildDetailText('Phone number', ratio),
-            _buildValueText('+1 321 123 9535', ratio),
+            _buildValueText(provider.senderPhone, ratio),
             SizedBox(height: 8 * ratio),
             _buildDetailText('Email', ratio),
-            _buildValueText('manualfola@gmail.com', ratio),
+            _buildValueText(provider.senderEmail, ratio),
             SizedBox(height: 8 * ratio),
             _buildDetailText('Pick up details', ratio),
-            _buildValueText(
-              'Port Reading,  Markley Street, EGO, New Jersey, United States',
-              ratio,
-            ),
+            _buildValueText(provider.senderFullAddress, ratio),
             SizedBox(height: 24 * ratio),
 
             // Receiver
@@ -455,19 +705,16 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
             ),
             SizedBox(height: 12 * ratio),
             _buildDetailText('Name', ratio),
-            _buildValueText('Joe Smith', ratio),
+            _buildValueText(provider.receiverFullName, ratio),
             SizedBox(height: 8 * ratio),
             _buildDetailText('Phone number', ratio),
-            _buildValueText('+1 321 123 9535', ratio),
+            _buildValueText(provider.receiverPhone, ratio),
             SizedBox(height: 8 * ratio),
             _buildDetailText('Email', ratio),
-            _buildValueText('manualfola@gmail.com', ratio),
+            _buildValueText(provider.receiverEmail, ratio),
             SizedBox(height: 8 * ratio),
-            _buildDetailText('Pick up details', ratio),
-            _buildValueText(
-              'Port Reading,  Markley Street, EGO, New Jersey, United States',
-              ratio,
-            ),
+            _buildDetailText('Delivery details', ratio),
+            _buildValueText(provider.receiverFullAddress, ratio),
             SizedBox(height: 24 * ratio),
 
             // Promo code
@@ -489,7 +736,11 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
               ),
             ),
             SizedBox(height: 12 * ratio),
-            const CustomTextField2(title: '', hintText: ''),
+            CustomTextField2(
+              title: '',
+              hintText: 'Enter promo code',
+              controller: _promoCodeController,
+            ),
             SizedBox(height: 12 * ratio),
             CustomButton(text: 'Apply', onTap: () {}),
             SizedBox(height: 24 * ratio),
@@ -516,7 +767,7 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
                   ),
                 ),
                 Text(
-                  '10.0\$',
+                  '${provider.declaredValue.toStringAsFixed(2)}\$',
                   style: TextStyle(
                     fontSize: 16 * ratio,
                     fontWeight: FontWeight.w600,
@@ -540,7 +791,7 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
                 Row(
                   children: [
                     Text(
-                      '1-4 days',
+                      provider.deliveryTime,
                       style: TextStyle(
                         fontSize: 14 * ratio,
                         fontWeight: FontWeight.w400,
@@ -570,7 +821,7 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
                   ),
                 ),
                 Text(
-                  '14.50\$',
+                  '${provider.deliveryCost.toStringAsFixed(2)}\$',
                   style: TextStyle(
                     fontSize: 18 * ratio,
                     fontWeight: FontWeight.bold,
@@ -603,7 +854,7 @@ class _CreateParcelStepsPageState extends State<CreateParcelStepsPage> {
 
   Widget _buildValueText(String text, double ratio) {
     return Text(
-      text,
+      text.isEmpty ? '-' : text,
       style: TextStyle(
         fontSize: 16 * ratio,
         fontWeight: FontWeight.w600,

@@ -17,4 +17,7 @@ class ApiConstants {
   // User endpoints
   static const String profile = '/user/profile';
   static const String updateProfile = '/user/update';
+
+  // Order endpoints
+  static const String orders = '/orders';
 }

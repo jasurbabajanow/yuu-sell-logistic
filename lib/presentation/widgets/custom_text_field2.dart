@@ -8,12 +8,18 @@ class CustomTextField2 extends StatelessWidget {
   final String hintText;
   final bool obscure;
   final int maxLines;
+  final TextEditingController? controller;
+  final TextInputType? keyboardType;
+  final ValueChanged<String>? onChanged;
   const CustomTextField2({
     super.key,
     required this.title,
     required this.hintText,
     this.obscure = false,
     this.maxLines = 1,
+    this.controller,
+    this.keyboardType,
+    this.onChanged,
   });
 
   @override
@@ -42,6 +48,9 @@ class CustomTextField2 extends StatelessWidget {
               vertical: 10 * ratio,
             ),
             child: TextField(
+              controller: controller,
+              keyboardType: keyboardType,
+              onChanged: onChanged,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 fillColor: AppColors.white,

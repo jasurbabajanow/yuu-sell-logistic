@@ -7,6 +7,7 @@ class DeliveryServiceCard extends StatelessWidget {
   final String price;
   final String deliveryTime;
   final bool showPrintLabel;
+  final bool isSelected;
 
   const DeliveryServiceCard({
     super.key,
@@ -15,6 +16,7 @@ class DeliveryServiceCard extends StatelessWidget {
     required this.price,
     required this.deliveryTime,
     this.showPrintLabel = false,
+    this.isSelected = false,
   });
 
   @override
@@ -24,11 +26,11 @@ class DeliveryServiceCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 16 * ratio),
       padding: EdgeInsets.all(16 * ratio),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isSelected ? badgeColor.withValues(alpha: 0.05) : Colors.white,
         borderRadius: BorderRadius.circular(12 * ratio),
         border: Border.all(
-          color: Colors.grey.shade200,
-          width: 1,
+          color: isSelected ? badgeColor : Colors.grey.shade200,
+          width: isSelected ? 2 : 1,
         ),
       ),
       child: Column(
