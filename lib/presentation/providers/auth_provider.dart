@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../core/errors/result.dart';
+import '../../core/storage/token_storage.dart';
 import '../../data/models/register_request.dart';
 import '../../data/models/login_request.dart';
+import '../../data/models/user_model.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
 
@@ -44,12 +46,32 @@ class AuthProvider extends ChangeNotifier {
     _status = AuthStatus.authenticated;
     _user = user;
     _errorMessage = null;
+    // Save user data to storage
+    if (user is UserModel) {
+      TokenStorage.saveUserData(user.toJson());
+    }
     notifyListeners();
   }
 
   void clearError() {
     _errorMessage = null;
     notifyListeners();
+  }
+
+  /// Check if user is already logged in from stored token
+  Future<bool> tryAutoLogin() async {
+    if (TokenStorage.isLoggedIn()) {
+      final userData = TokenStorage.getUserData();
+      if (userData != null) {
+        _user = UserModel.fromJson(userData);
+        _status = AuthStatus.authenticated;
+        notifyListeners();
+        return true;
+      }
+    }
+    _status = AuthStatus.unauthenticated;
+    notifyListeners();
+    return false;
   }
 
   Future<bool> register({
@@ -119,10 +141,16 @@ class AuthProvider extends ChangeNotifier {
       success: (_) {
         _status = AuthStatus.unauthenticated;
         _user = null;
+        // Clear stored data
+        TokenStorage.clearAll();
         notifyListeners();
       },
       failure: (message, statusCode) {
-        _setError(message);
+        // Even if API call fails, clear local data
+        _status = AuthStatus.unauthenticated;
+        _user = null;
+        TokenStorage.clearAll();
+        notifyListeners();
       },
     );
   }

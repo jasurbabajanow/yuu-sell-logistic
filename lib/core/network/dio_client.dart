@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'api_constants.dart';
+import '../storage/token_storage.dart';
 
 class DioClient {
   late final Dio _dio;
@@ -32,11 +33,19 @@ class DioClient {
   void setTokens({required String accessToken, String? refreshToken}) {
     _accessToken = accessToken;
     _refreshToken = refreshToken;
+    // Persist token to storage
+    TokenStorage.saveAccessToken(accessToken);
   }
 
   void clearTokens() {
     _accessToken = null;
     _refreshToken = null;
+    // Clear persisted token
+    TokenStorage.clearAll();
+  }
+
+  void loadTokenFromStorage() {
+    _accessToken = TokenStorage.getAccessToken();
   }
 
   String? get accessToken => _accessToken;

@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yuu_sell/core/di/injection_container.dart';
 import 'package:yuu_sell/core/router/app_router.dart';
+import 'package:yuu_sell/core/storage/token_storage.dart';
 import 'package:yuu_sell/core/theme/app_colors.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize token storage
+  await TokenStorage.init();
+
+  // Load saved token into DioClient
+  InjectionContainer.dioClient.loadTokenFromStorage();
+
   runApp(const MyApp());
 }
 
